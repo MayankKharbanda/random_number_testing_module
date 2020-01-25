@@ -1,6 +1,6 @@
-##TEST SUITE--Dieharder
+## TEST SUITE--Dieharder
 
-###TESTS
+### TESTS
 - 0 Diehard Birthdays Test
 - 1 Diehard OPERM5 Test
 - 2 Diehard 32x32 Binary Rank Test
@@ -33,4 +33,4 @@
 - 208 DAB Fill Tree 2 Test
 - 209 DAB Monobit 2 Test
   
-###Source: https://webhome.phy.duke.edu/~rgb/General/dieharder.php
+### Source: https://webhome.phy.duke.edu/~rgb/General/dieharder.php

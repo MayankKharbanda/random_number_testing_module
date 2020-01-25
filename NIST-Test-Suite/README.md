@@ -1,6 +1,6 @@
-##TEST SUITE--NIST-SP-800-22
+## TEST SUITE--NIST-SP-800-22
 
-###TESTS
+### TESTS
 
 - Frequency (Monobit) Test
 - Frequency Test within a Block
@@ -18,4 +18,4 @@
 - Random Excursions Test
 - Random Excursions Variant Test
 
-###Source: https://csrc.nist.gov/projects/random-bit-generation/documentation-and-software
+### Source: https://csrc.nist.gov/projects/random-bit-generation/documentation-and-software
