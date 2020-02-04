@@ -1,0 +1,29 @@
+dieharder -d 0 -f //file -g 201 > //output //birthday
+
+dieharder -d 1 -f //file -g 201 > //output //operm5
+
+dieharder -d 203 -f //file -g 201 > //output //rgb_lagged_sum
+
+./testu01 -m small_crush -i /home/mayank/Desktop/randomness/Tests/TestU01/python-random-updated.bin -t 1 >>results_small_crush.txt
+//smarsa birthday spacing
+
+./testu01 -m small_crush -i /home/mayank/Desktop/randomness/Tests/TestU01/python-random-updated.bin -t 4 >>results_small_crush.txt
+//sknuth simppoker test
+
+./testu01 -m small_crush -i /home/mayank/Desktop/randomness/Tests/TestU01/python-random-updated.bin -t 6 >>results_small_crush.txt
+//sknuth maxoft test
+
+./testu01 -m crush -i /home/mayank/Desktop/randomness/Tests/TestU01/python-random-updated.bin -t 1 >>results_small_crush.txt
+//smutlin multinomial test
+
+./testu01 -m crush -i /home/mayank/Desktop/randomness/Tests/TestU01/python-random-updated.bin -t 19 >>results_small_crush.txt
+//snpair closepair test
+
+./testu01 -m crush -i /home/mayank/Desktop/randomness/Tests/TestU01/python-random-updated.bin -t 22 >>results_small_crush.txt
+//snpair closepair bit match
+
+./testu01 -m big_crush -i /home/mayank/Desktop/randomness/Tests/TestU01/python-random-updated.bin -t 10 >>results_small_crush.txt
+
+./testu01 -m big_crush -i /home/mayank/Desktop/randomness/Tests/TestU01/python-random-updated.bin -t 20 >>results_small_crush.txt
+
+./testu01 -m big_crush -i /home/mayank/Desktop/randomness/Tests/TestU01/python-random-updated.bin -t 30 >>results_small_crush.txt
