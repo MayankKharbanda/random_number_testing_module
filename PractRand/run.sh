@@ -5,6 +5,6 @@ timestamp(){
 }
  : > time.txt
 timestamp >> time.txt
-cat dev-random.bin | ./RNG_test stdin32 -a
+cat python-random-updated.bin | ./RNG_test stdin32 -a
 timestamp >> time.txt
 

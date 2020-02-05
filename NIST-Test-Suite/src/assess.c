@@ -63,13 +63,13 @@ main(int argc, char *argv[])
 	char	*streamFile;	/* STREAM FILENAME     */
 	
 
-	if ( argc != 2 ) {
+	/*if ( argc != 2 ) {
 		printf("Usage: %s <stream length>\n", argv[0]);
 		printf("   <stream length> is the length of the individual bit stream(s) to be processed\n");
 		return 0;
-	}
+	}*/
 
-	tp.n = atoi(argv[1]);
+	tp.n = 2000000;
 	tp.blockFrequencyBlockLength = 128;
 	tp.nonOverlappingTemplateBlockLength = 9;
 	tp.overlappingTemplateBlockLength = 9;
@@ -78,9 +78,9 @@ main(int argc, char *argv[])
 	tp.linearComplexitySequenceLength = 500;
 	tp.numOfBitStreams = 1;
 	option = generatorOptions(&streamFile);
-	chooseTests();
+	chooseTests(atoi(argv[1]));
 	fixParameters();
-	openOutputStreams(option);
+	openOutputStreams(atoi(argv[1]), atoi(argv[2]));
 	invokeTestSuite(option, streamFile);
 	fclose(freqfp);
 	for( i=1; i<=NUMOFTESTS; i++ ) {

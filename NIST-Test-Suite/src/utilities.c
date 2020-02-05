@@ -34,16 +34,18 @@ displayGeneratorOptions()
 int
 generatorOptions(char** streamFile)
 {
-	char	file[200];
+	char	file[200]="data/1.bin";
 	int		option = NUMOFGENERATORS+1;
 	FILE	*fp;
 	
-	while ( (option < 0) || (option > NUMOFGENERATORS) ) {
-		option = displayGeneratorOptions();
+	//while ( (option < 0) || (option > NUMOFGENERATORS) ) {
+	{
+		option = 0;
 		switch( option ) {
 			case 0:
-				printf("\t\tUser Prescribed Input File: ");
-				scanf("%s", file);
+				//printf("\t\tUser Prescribed Input File: ");
+				//scanf("%s", file);
+				//file="data/1.bin";
 				*streamFile = (char*)calloc(200, sizeof(char));
 				sprintf(*streamFile, "%s", file);
 				printf("\n");
@@ -97,7 +99,7 @@ generatorOptions(char** streamFile)
 
 
 void
-chooseTests()
+chooseTests(int param)
 {
 	int		i;
 	
@@ -115,20 +117,47 @@ chooseTests()
 	printf("            Enter 0 if you DO NOT want to apply all of the\n");
 	printf("            statistical tests to each sequence and 1 if you DO.\n\n");
 	printf("   Enter Choice: ");
-	scanf("%d", &testVector[0]);
+	
+	//scanf("%d", &testVector[0]);
+	testVector[0]=0;
 	printf("\n");
-	if ( testVector[0] == 1 )
+	/*if ( testVector[0] == 1 )
 		for( i=1; i<=NUMOFTESTS; i++ )
 			testVector[i] = 1;
-	else {
+	else */{
 		printf("         INSTRUCTIONS\n");
 		printf("            Enter a 0 or 1 to indicate whether or not the numbered statistical\n");
 		printf("            test should be applied to each sequence.\n\n");
 		printf("      123456789111111\n");
 		printf("               012345\n");
 		printf("      ");
-		for ( i=1; i<=NUMOFTESTS; i++ ) 
-			scanf("%1d", &testVector[i]);
+		if(param==0)
+		{
+			for ( i=1; i<=NUMOFTESTS; i++ )
+			{ 
+				testVector[i]=0;//scanf("%1d", &testVector[i]);
+				if(i==9)
+					testVector[i]=1;
+			}
+		}
+		else if(param==1)
+		{
+			for ( i=1; i<=NUMOFTESTS; i++ )
+			{ 
+				testVector[i]=0;//scanf("%1d", &testVector[i]);
+				if(i==15)
+					testVector[i]=1;
+			}
+		}
+		else if(param==2)
+		{
+			for ( i=1; i<=NUMOFTESTS; i++ )
+			{ 
+				testVector[i]=0;//scanf("%1d", &testVector[i]);
+				if(i==1)
+					testVector[i]=1;
+			}
+		}
 		printf("\n\n");
 	}
 }
@@ -163,7 +192,8 @@ fixParameters()
 			printf("    [%d] Linear Complexity Test - block length(M):       %d\n", counter++, tp.linearComplexitySequenceLength);
 		printf("\n");
 		printf("   Select Test (0 to continue): ");
-		scanf("%1d", &testid);
+		testid=0;
+		//scanf("%1d", &testid);
 		printf("\n");
 		
 		counter = 0;
@@ -235,7 +265,8 @@ fileBasedBitStreams(char *streamFile)
 	printf("    [0] ASCII - A sequence of ASCII 0's and 1's\n");
 	printf("    [1] Binary - Each byte in data file contains 8 bits of data\n\n");
 	printf("   Select input mode:  ");
-	scanf("%1d", &mode);
+	//scanf("%1d", &mode);
+	mode=1;
 	printf("\n");
 	if ( mode == 0 ) {
 		if ( (fp = fopen(streamFile, "r")) == NULL ) {
@@ -365,17 +396,18 @@ convertToBits(BYTE *x, int xBitLength, int bitsNeeded, int *num_0s, int *num_1s,
 
 
 void
-openOutputStreams(int option)
+openOutputStreams(int type, int loc)
 {
 	int		i, numOfBitStreams, numOfOpenFiles = 0;
 	char	freqfn[200], summaryfn[200], statsDir[200], resultsDir[200];
+	char	result_type[3][10] = { "slow", "normal", "fast" };
 	
-	sprintf(freqfn, "experiments/%s/freq.txt", generatorDir[option]);
+	sprintf(freqfn, "/home/mayank/Desktop/randomness/byte_stream/results/%s/results_%d_nist/freq.txt", result_type[type], loc);
 	if ( (freqfp = fopen(freqfn, "w")) == NULL ) {
 		printf("\t\tMAIN:  Could not open freq file: <%s>", freqfn);
 		exit(-1);
 	}
-	sprintf(summaryfn, "experiments/%s/finalAnalysisReport.txt", generatorDir[option]);
+	sprintf(summaryfn, "/home/mayank/Desktop/randomness/byte_stream/results/%s/results_%d_nist/finalAnalysisReport.txt", result_type[type], loc);
 	if ( (summary = fopen(summaryfn, "w")) == NULL ) {
 		printf("\t\tMAIN:  Could not open stats file: <%s>", summaryfn);
 		exit(-1);
@@ -383,8 +415,8 @@ openOutputStreams(int option)
 	
 	for( i=1; i<=NUMOFTESTS; i++ ) {
 		if ( testVector[i] == 1 ) {
-			sprintf(statsDir, "experiments/%s/%s/stats.txt", generatorDir[option], testNames[i]);
-			sprintf(resultsDir, "experiments/%s/%s/results.txt", generatorDir[option], testNames[i]);
+			sprintf(statsDir, "/home/mayank/Desktop/randomness/byte_stream/results/%s/results_%d_nist/%s/stats.txt",  result_type[type], loc, testNames[i]);
+			sprintf(resultsDir, "/home/mayank/Desktop/randomness/byte_stream/results/%s/results_%d_nist/%s/results.txt", result_type[type], loc, testNames[i]);
 			if ( (stats[i] = fopen(statsDir, "w")) == NULL ) {	/* STATISTICS LOG */
 				printf("ERROR: LOG FILES COULD NOT BE OPENED.\n");
 				printf("       MAX # OF OPENED FILES HAS BEEN REACHED = %d\n", numOfOpenFiles);
@@ -404,7 +436,8 @@ openOutputStreams(int option)
 		}
 	}
 	printf("   How many bitstreams? ");
-	scanf("%d", &numOfBitStreams);
+	//scanf("%d", &numOfBitStreams);
+	numOfBitStreams=100;
 	tp.numOfBitStreams = numOfBitStreams;
 	printf("\n");
 }
