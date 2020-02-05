@@ -1,6 +1,12 @@
 #!/bin/sh
-export var1="1"
-var1=$(. /home/mayank/Desktop/randomness/byte_stream/test2.sh &)
-echo "$var1 in test"
-sleep 5
-echo "$var1 in test"
+. /home/mayank/Desktop/randomness/byte_stream/test2.sh hel & Process_id1=$!
+while [ true ]
+do
+if !((ps -p $Process_id1 > /dev/null))
+then
+	. /home/mayank/Desktop/randomness/byte_stream/test2.sh hel & Process_id1=$!
+else 
+	sleep 1
+fi
+echo "In test"
+done
