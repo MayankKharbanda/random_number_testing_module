@@ -1,9 +1,0 @@
-#=============================================================================#
-#            dieharder version 3.31.1 Copyright 2003 Robert G. Brown          #
-#=============================================================================#
-   rng_name    |           filename             |rands/second|
- file_input_raw|/home/mayank/Desktop/randomness/random_numbers/numpy-random.bin|  1.49e+07  |
-#=============================================================================#
-        test_name   |ntup| tsamples |psamples|  p-value |Assessment
-#=============================================================================#
-      rgb_lagged_sum|   0|   1000000|     100|0.28193867|  PASSED  

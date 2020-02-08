@@ -1,27 +1,29 @@
 #!/bin/bash
 
 
-mkdir -p /home/mayank/Desktop/randomness/byte_stream/results/normal/$1/
-mkdir -p /home/mayank/Desktop/randomness/byte_stream/results/normal/results_$1_nist/
-
-#dieharder tests
-dieharder -d 1 -f /home/mayank/Desktop/randomness/byte_stream/random_normal_$1.bin -g 201 > /home/mayank/Desktop/randomness/byte_stream/results/normal/$1/results.txt   #operm5
-
-cd /home/mayank/Desktop/randomness/Tests/NIST-Test-Suite/
-
-#nist test
-./assess 1 $1
+mkdir -p results_parallel_process/
+#mkdir -p /home/mayank/Desktop/randomness/byte_stream/results/normal/results_$1_nist/
 
 
-cd /home/mayank/Desktop/randomness/Tests/TestU01_file/
-#testu01
-./testu01 -m crush -i /home/mayank/Desktop/randomness/byte_stream/random_normal_$1.bin -t 1 >>/home/mayank/Desktop/randomness/byte_stream/results/normal/$1/results.txt
-#smutlin multinomial test
+case $1 in 
 
+	1) dieharder -d 1 -f random_numbers/dieharder_1.bin -g 201 > results_parallel_process/dieharder_1.txt   #operm5
+	;;
 
-./testu01 -m crush -i /home/mayank/Desktop/randomness/byte_stream/random_normal_$1.bin -t 19 >>/home/mayank/Desktop/randomness/byte_stream/results/normal/$1/results.txt
-#snpair closepair test
+	2) Tests/NIST-Test-Suite/assess 2
 
+	;;
+	
+	3) Tests/TestU01_file/testu01 -m crush -i random_numbers/dieharder_203.bin -t 1 >> results_parallel_process/crush_1.txt
+		#smutlin multinomial test
+	;;
+	
+	4) Tests/TestU01_file/testu01 -m crush -i random_numbers/dieharder_203.bin -t 19 >> results_parallel_process/crush_19.txt
+	#snpair closepair test
+	;;
 
-./testu01 -m crush -i /home/mayank/Desktop/randomness/byte_stream/random_normal_$1.bin -t 22 >>/home/mayank/Desktop/randomness/byte_stream/results/normal/$1/results.txt
-#snpair closepair bit match
+	5) Tests/TestU01_file/testu01 -m crush -i random_numbers/dieharder_203.bin -t 22 >> results_parallel_process/crush_22.txt
+	#snpair closepair bit match
+	;;
+	
+	esac
