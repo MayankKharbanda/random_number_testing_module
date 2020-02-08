@@ -10,6 +10,6 @@ void	fileBasedBitStreams(char *streamFile);
 void	readBinaryDigitsInASCIIFormat(FILE *fp, char *streamFile);
 void	readHexDigitsInBinaryFormat(FILE *fp);
 int		convertToBits(BYTE *x, int xBitLength, int bitsNeeded, int *num_0s, int *num_1s, int *bitsRead);
-void	openOutputStreams(int option, int location);
+void	openOutputStreams(int test_number);
 void	invokeTestSuite(int option, char *streamFile);
 void	nist_test_suite();

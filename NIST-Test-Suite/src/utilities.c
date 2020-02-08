@@ -34,8 +34,9 @@ displayGeneratorOptions()
 int
 generatorOptions(char** streamFile)
 {
-	char	file[200]="data/1.bin";
 	int		option = NUMOFGENERATORS+1;
+	//char	result_type[3][10] = { "slow", "normal", "fast" };
+	char	file[200]="random_numbers/dieharder_203.bin";
 	FILE	*fp;
 	
 	//while ( (option < 0) || (option > NUMOFGENERATORS) ) {
@@ -131,32 +132,11 @@ chooseTests(int param)
 		printf("      123456789111111\n");
 		printf("               012345\n");
 		printf("      ");
-		if(param==0)
-		{
-			for ( i=1; i<=NUMOFTESTS; i++ )
-			{ 
-				testVector[i]=0;//scanf("%1d", &testVector[i]);
-				if(i==9)
-					testVector[i]=1;
-			}
-		}
-		else if(param==1)
-		{
-			for ( i=1; i<=NUMOFTESTS; i++ )
-			{ 
-				testVector[i]=0;//scanf("%1d", &testVector[i]);
-				if(i==15)
-					testVector[i]=1;
-			}
-		}
-		else if(param==2)
-		{
-			for ( i=1; i<=NUMOFTESTS; i++ )
-			{ 
-				testVector[i]=0;//scanf("%1d", &testVector[i]);
-				if(i==1)
-					testVector[i]=1;
-			}
+		for ( i=1; i<=NUMOFTESTS; i++ )
+		{ 
+			testVector[i]=0;//scanf("%1d", &testVector[i]);
+			if(i==param)
+				testVector[i]=1;
 		}
 		printf("\n\n");
 	}
@@ -396,18 +376,18 @@ convertToBits(BYTE *x, int xBitLength, int bitsNeeded, int *num_0s, int *num_1s,
 
 
 void
-openOutputStreams(int type, int loc)
+openOutputStreams(int test_number)
 {
 	int		i, numOfBitStreams, numOfOpenFiles = 0;
 	char	freqfn[200], summaryfn[200], statsDir[200], resultsDir[200];
-	char	result_type[3][10] = { "slow", "normal", "fast" };
+	//char	result_type[3][10] = { "slow", "normal", "fast" };
 	
-	sprintf(freqfn, "/home/mayank/Desktop/randomness/byte_stream/results/%s/results_%d_nist/freq.txt", result_type[type], loc);
+	sprintf(freqfn, "results_parallel_process/nist_%d/freq.txt", test_number);
 	if ( (freqfp = fopen(freqfn, "w")) == NULL ) {
 		printf("\t\tMAIN:  Could not open freq file: <%s>", freqfn);
 		exit(-1);
 	}
-	sprintf(summaryfn, "/home/mayank/Desktop/randomness/byte_stream/results/%s/results_%d_nist/finalAnalysisReport.txt", result_type[type], loc);
+	sprintf(summaryfn, "results_parallel_process/nist_%d/finalAnalysisReport.txt", test_number);
 	if ( (summary = fopen(summaryfn, "w")) == NULL ) {
 		printf("\t\tMAIN:  Could not open stats file: <%s>", summaryfn);
 		exit(-1);
@@ -415,8 +395,8 @@ openOutputStreams(int type, int loc)
 	
 	for( i=1; i<=NUMOFTESTS; i++ ) {
 		if ( testVector[i] == 1 ) {
-			sprintf(statsDir, "/home/mayank/Desktop/randomness/byte_stream/results/%s/results_%d_nist/%s/stats.txt",  result_type[type], loc, testNames[i]);
-			sprintf(resultsDir, "/home/mayank/Desktop/randomness/byte_stream/results/%s/results_%d_nist/%s/results.txt", result_type[type], loc, testNames[i]);
+			sprintf(statsDir, "results_parallel_process/nist_%d/%s/stats.txt",  test_number, testNames[i]);
+			sprintf(resultsDir, "results_parallel_process/nist_%d/%s/results.txt", test_number, testNames[i]);
 			if ( (stats[i] = fopen(statsDir, "w")) == NULL ) {	/* STATISTICS LOG */
 				printf("ERROR: LOG FILES COULD NOT BE OPENED.\n");
 				printf("       MAX # OF OPENED FILES HAS BEEN REACHED = %d\n", numOfOpenFiles);
