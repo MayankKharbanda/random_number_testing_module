@@ -10,7 +10,7 @@ testNames=( " " "Frequency" "BlockFrequency" "CumulativeSums" "Runs" "LongestRun
 
 mkdir -p results_parallel_process/nist_8/${testNames[8]}/
 
-echo "Dieharder 1" >> time_slow.txt
+echo "Dieharder 203" >> time_slow.txt
 timestamp >> time_slow.txt
 dieharder -d 203 -n 31 -f random_numbers_time/dieharder203.bin -g 201 > results_parallel_process/dieharder_203.txt   
 timestamp >> time_slow.txt
