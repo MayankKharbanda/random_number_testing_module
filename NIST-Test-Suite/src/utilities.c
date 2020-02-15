@@ -36,7 +36,7 @@ generatorOptions(char** streamFile)
 {
 	int		option = NUMOFGENERATORS+1;
 	//char	result_type[3][10] = { "slow", "normal", "fast" };
-	char	file[200]="random_numbers/dieharder_203.bin";
+	char	file[200]="random_numbers_time/nist.bin";
 	FILE	*fp;
 	
 	//while ( (option < 0) || (option > NUMOFGENERATORS) ) {
