@@ -30,10 +30,10 @@ for i in range(cores):
 total_tests_all = sum(total_tests_each_p)
 
 
-#contains the value n+1 if n tests are completed in a core
+#contains the number of tests completed in a core
 test_process = []
 for i in range(cores):
-    test_process.append(1)
+    test_process.append(0)
     
 
 
@@ -74,9 +74,9 @@ while tests_completed < total_tests_all:
     #checking each core if completed execution or not
     for i in range(cores):
         
-        if(process_event[i].is_set() and test_process[i] <= total_tests_each_p[i]):
+        if(process_event[i].is_set() and test_process[i] < total_tests_each_p[i]):
             
-            process_arr[i] = multiprocessing.Process(target=process, args=(test_process[i], process_event_global, process_event[i]))
+            process_arr[i] = multiprocessing.Process(target=process, args=(process_list[i][test_process[i]][0], process_event_global, process_event[i]))
             process_arr[i].start()
             
             test_process[i] = test_process[i] + 1
@@ -92,7 +92,6 @@ while tests_completed < total_tests_all:
 #waiting for each core to complete
 for i in range(cores):
     process_event[i].wait()
-    
 
 #storing the wait time into file
 with open('results_parallel_process/wait_time.txt','w') as f:
