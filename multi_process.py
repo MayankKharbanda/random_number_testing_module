@@ -57,6 +57,9 @@ process_event_global.set()
 process_arr = [None]*cores
 
 
+#file allocation
+process_file_size_arr = [None]  #add numeric file size(in bytes) of ith test at ith index 
+file_seek = 0
 
 
 while tests_completed < total_tests_all:
@@ -76,6 +79,12 @@ while tests_completed < total_tests_all:
         
         if(process_event[i].is_set() and test_process[i] < total_tests_each_p[i]):
             
+            #generating required file size
+            with open('random_source.bin','rb') as rf, open(f'{process_list[i][test_process[i]][0]}.bin','wb') as wf:
+                wf.seek(file_seek, 0)
+                wf.write(rf.read(process_file_size_arr[process_list[i][test_process[i]][0]]))
+                file_seek = file_seek+process_file_size_arr[process_list[i][test_process[i]][0]]
+            
             process_arr[i] = multiprocessing.Process(target=process, args=(process_list[i][test_process[i]][0], process_event_global, process_event[i]))
             process_arr[i].start()
             
@@ -92,6 +101,7 @@ while tests_completed < total_tests_all:
 #waiting for each core to complete
 for i in range(cores):
     process_event[i].wait()
+    
 
 #storing the wait time into file
 with open('results_parallel_process/wait_time.txt','w') as f:
