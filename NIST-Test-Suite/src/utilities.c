@@ -103,7 +103,7 @@ void
 chooseTests(int param)
 {
 	int		i;
-	
+	/*
 	printf("                S T A T I S T I C A L   T E S T S\n");
 	printf("                _________________________________\n\n");
 	printf("    [01] Frequency                       [02] Block Frequency\n");
@@ -118,28 +118,28 @@ chooseTests(int param)
 	printf("            Enter 0 if you DO NOT want to apply all of the\n");
 	printf("            statistical tests to each sequence and 1 if you DO.\n\n");
 	printf("   Enter Choice: ");
-	
+	*/
 	//scanf("%d", &testVector[0]);
 	testVector[0]=0;
 	printf("\n");
 	/*if ( testVector[0] == 1 )
 		for( i=1; i<=NUMOFTESTS; i++ )
 			testVector[i] = 1;
-	else */{
+	else {
 		printf("         INSTRUCTIONS\n");
 		printf("            Enter a 0 or 1 to indicate whether or not the numbered statistical\n");
 		printf("            test should be applied to each sequence.\n\n");
 		printf("      123456789111111\n");
 		printf("               012345\n");
-		printf("      ");
+		printf("      ");*/
 		for ( i=1; i<=NUMOFTESTS; i++ )
 		{ 
 			testVector[i]=0;//scanf("%1d", &testVector[i]);
 			if(i==param)
 				testVector[i]=1;
 		}
-		printf("\n\n");
-	}
+		//printf("\n\n");
+	//}
 }
 
 
@@ -156,7 +156,7 @@ fixParameters()
 		
 	do {
 		counter = 1;
-		printf("        P a r a m e t e r   A d j u s t m e n t s\n");
+		/*printf("        P a r a m e t e r   A d j u s t m e n t s\n");
 		printf("        -----------------------------------------\n");
 		if ( testVector[TEST_BLOCK_FREQUENCY] == 1 )
 			printf("    [%d] Block Frequency Test - block length(M):         %d\n", counter++, tp.blockFrequencyBlockLength);
@@ -171,10 +171,10 @@ fixParameters()
 		if ( testVector[TEST_LINEARCOMPLEXITY] == 1 )
 			printf("    [%d] Linear Complexity Test - block length(M):       %d\n", counter++, tp.linearComplexitySequenceLength);
 		printf("\n");
-		printf("   Select Test (0 to continue): ");
+		printf("   Select Test (0 to continue): ");*/
 		testid=0;
 		//scanf("%1d", &testid);
-		printf("\n");
+		//printf("\n");
 		
 		counter = 0;
 		if ( testVector[TEST_BLOCK_FREQUENCY] == 1 ) {
@@ -241,11 +241,11 @@ fileBasedBitStreams(char *streamFile)
 	FILE	*fp;
 	int		mode;
 	
-	printf("   Input File Format:\n");
+	/*printf("   Input File Format:\n");
 	printf("    [0] ASCII - A sequence of ASCII 0's and 1's\n");
 	printf("    [1] Binary - Each byte in data file contains 8 bits of data\n\n");
 	printf("   Select input mode:  ");
-	//scanf("%1d", &mode);
+	//scanf("%1d", &mode);*/
 	mode=1;
 	printf("\n");
 	if ( mode == 0 ) {
@@ -277,7 +277,7 @@ readBinaryDigitsInASCIIFormat(FILE *fp, char *streamFile)
 		printf("Statistical Testing Aborted!\n");
 		return;
 	}
-	printf("     Statistical Testing In Progress.........\n\n");   
+	//printf("     Statistical Testing In Progress.........\n\n");   
 	for ( i=0; i<tp.numOfBitStreams; i++ ) {
 		num_0s = 0;
 		num_1s = 0;
@@ -316,7 +316,7 @@ readHexDigitsInBinaryFormat(FILE *fp)
 		return;
 	}
 
-	printf("     Statistical Testing In Progress.........\n\n");   
+	//printf("     Statistical Testing In Progress.........\n\n");   
 	for ( i=0; i<tp.numOfBitStreams; i++ ) {
 		num_0s = 0;
 		num_1s = 0;
@@ -415,11 +415,11 @@ openOutputStreams(int test_number)
 				numOfOpenFiles++;
 		}
 	}
-	printf("   How many bitstreams? ");
+	//printf("   How many bitstreams? ");
 	//scanf("%d", &numOfBitStreams);
 	numOfBitStreams=100;
 	tp.numOfBitStreams = numOfBitStreams;
-	printf("\n");
+	//printf("\n");
 }
 
 
@@ -429,8 +429,8 @@ invokeTestSuite(int option, char *streamFile)
 	fprintf(freqfp, "________________________________________________________________________________\n\n");
 	fprintf(freqfp, "\t\tFILE = %s\t\tALPHA = %6.4f\n", streamFile, ALPHA);
 	fprintf(freqfp, "________________________________________________________________________________\n\n");
-	if ( option != 0 )
-		printf("     Statistical Testing In Progress.........\n\n");
+	//if ( option != 0 )
+		//printf("     Statistical Testing In Progress.........\n\n");
 	switch( option ) {
 		case 0:
 			fileBasedBitStreams(streamFile);
@@ -469,7 +469,7 @@ invokeTestSuite(int option, char *streamFile)
 			printf("Error in invokeTestSuite!\n");
 			break;
 	}
-	printf("     Statistical Testing Complete!!!!!!!!!!!!\n\n");
+	//printf("     Statistical Testing Complete!!!!!!!!!!!!\n\n");
 }
 
 
