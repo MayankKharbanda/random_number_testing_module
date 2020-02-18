@@ -79,6 +79,9 @@ while tests_completed < total_tests_all:
         
         if(process_event[i].is_set() and test_process[i] < total_tests_each_p[i]):
             
+            #deleting last file
+            os.remove(f'{process_list[i][test_process[i]-1][0]}.bin')
+            
             #generating required file size
             with open('random_source.bin','rb') as rf, open(f'{process_list[i][test_process[i]][0]}.bin','wb') as wf:
                 wf.seek(file_seek, 0)
@@ -101,7 +104,8 @@ while tests_completed < total_tests_all:
 #waiting for each core to complete
 for i in range(cores):
     process_event[i].wait()
-    
+    #delete the random generated files
+    os.remove(f'{process_list[i][test_process[i]][0]}.bin')
 
 #storing the wait time into file
 with open('results_parallel_process/wait_time.txt','w') as f:
