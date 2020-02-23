@@ -3,8 +3,8 @@
 timestamp(){
 	date "+%s"
 }
- : > time2.txt
-timestamp >> time2.txt
-./assess 2000000
-timestamp >> time2.txt
+ : > time.txt
+timestamp >> time.txt
+./assess 8 data/nist.txt
+timestamp >> time.txt
 

@@ -50,8 +50,8 @@
 #include "../include/cephes.h"  
 #include "../include/utilities.h"
 
-void	partitionResultFile(int numOfFiles, int numOfSequences, int option, int testNameID, int test_number);
-void	postProcessResults(int option, int test_number);
+void	partitionResultFile(int numOfFiles, int numOfSequences, char* output_loc, int testNameID);
+void	postProcessResults(char* output_loc);
 int		cmp(const double *a, const double *b);
 int		computeMetrics(char *s, int test);
 
@@ -63,11 +63,11 @@ main(int argc, char *argv[])
 	char	*streamFile;	/* STREAM FILENAME     */
 	
 
-	/*if ( argc != 2 ) {
+	if ( argc != 4 ) {
 		printf("Usage: %s <stream length>\n", argv[0]);
 		printf("   <stream length> is the length of the individual bit stream(s) to be processed\n");
 		return 0;
-	}*/
+	}
 
 	tp.n = 2000000;
 	tp.blockFrequencyBlockLength = 128;
@@ -77,10 +77,10 @@ main(int argc, char *argv[])
 	tp.serialBlockLength = 16;
 	tp.linearComplexitySequenceLength = 500;
 	tp.numOfBitStreams = 1;
-	option = generatorOptions(&streamFile);
+	option = generatorOptions(argv[2], &streamFile);
 	chooseTests(atoi(argv[1]));
 	fixParameters();
-	openOutputStreams(atoi(argv[1]));
+	openOutputStreams(argv[3]);
 	invokeTestSuite(option, streamFile);
 	fclose(freqfp);
 	for( i=1; i<=NUMOFTESTS; i++ ) {
@@ -90,15 +90,15 @@ main(int argc, char *argv[])
 			fclose(results[i]);
 	}
 	if ( (testVector[0] == 1) || (testVector[TEST_CUSUM] == 1) ) 
-		partitionResultFile(2, tp.numOfBitStreams, option, TEST_CUSUM, atoi(argv[1]));
+		partitionResultFile(2, tp.numOfBitStreams, argv[3], TEST_CUSUM);
 	if ( (testVector[0] == 1) || (testVector[TEST_NONPERIODIC] == 1) ) 
-		partitionResultFile(MAXNUMOFTEMPLATES, tp.numOfBitStreams, option, TEST_NONPERIODIC, atoi(argv[1]));
+		partitionResultFile(MAXNUMOFTEMPLATES, tp.numOfBitStreams, argv[3], TEST_NONPERIODIC);
 	if ( (testVector[0] == 1) || (testVector[TEST_RND_EXCURSION] == 1) )
-		partitionResultFile(8, tp.numOfBitStreams, option, TEST_RND_EXCURSION, atoi(argv[1]));
+		partitionResultFile(8, tp.numOfBitStreams, argv[3], TEST_RND_EXCURSION);
 	if ( (testVector[0] == 1) || (testVector[TEST_RND_EXCURSION_VAR] == 1) )
-		partitionResultFile(18, tp.numOfBitStreams, option, TEST_RND_EXCURSION_VAR, atoi(argv[1]));
+		partitionResultFile(18, tp.numOfBitStreams, argv[3], TEST_RND_EXCURSION_VAR);
 	if ( (testVector[0] == 1) || (testVector[TEST_SERIAL] == 1) )
-		partitionResultFile(2, tp.numOfBitStreams, option, TEST_SERIAL, atoi(argv[1]));
+		partitionResultFile(2, tp.numOfBitStreams, argv[3], TEST_SERIAL);
 	fprintf(summary, "------------------------------------------------------------------------------\n");
 	fprintf(summary, "RESULTS FOR THE UNIFORMITY OF P-VALUES AND THE PROPORTION OF PASSING SEQUENCES\n");
 	fprintf(summary, "------------------------------------------------------------------------------\n");
@@ -106,14 +106,14 @@ main(int argc, char *argv[])
 	fprintf(summary, "------------------------------------------------------------------------------\n");
 	fprintf(summary, " C1  C2  C3  C4  C5  C6  C7  C8  C9 C10  P-VALUE  PROPORTION  STATISTICAL TEST\n");
 	fprintf(summary, "------------------------------------------------------------------------------\n");
-	postProcessResults(option, atoi(argv[1]));
+	postProcessResults(argv[3]);
 	fclose(summary);
 
 	return 1;
 }
 
 void
-partitionResultFile(int numOfFiles, int numOfSequences, int option, int testNameID, int test_number)
+partitionResultFile(int numOfFiles, int numOfSequences, char* output_loc, int testNameID)
 { 
 	int		i, k, m, j, start, end, num, numread;
 	float	c;
@@ -125,7 +125,7 @@ partitionResultFile(int numOfFiles, int numOfSequences, int option, int testName
 	for ( i=0; i<MAXFILESPERMITTEDFORPARTITION; i++ )
 		s[i] = (char*)calloc(200, sizeof(char));
 	
-	sprintf(resultsDir, "results_parallel_process/nist_%d/%s/results.txt", test_number, testNames[testNameID]);
+	sprintf(resultsDir, "%s/nist/%s/results.txt", output_loc, testNames[testNameID]);
 	
 	if ( (fp[numOfFiles] = fopen(resultsDir, "r")) == NULL ) {
 		printf("%s", resultsDir);
@@ -135,11 +135,11 @@ partitionResultFile(int numOfFiles, int numOfSequences, int option, int testName
 	
 	for ( i=0; i<numOfFiles; i++ ) {
 		if ( i < 10 )
-			sprintf(s[i], "results_parallel_process/nist_%d/%s/data%1d.txt", test_number, testNames[testNameID], i+1);
+			sprintf(s[i], "%s/nist/%s/data%1d.txt", output_loc, testNames[testNameID], i+1);
 		else if (i < 100)
-			sprintf(s[i], "results_parallel_process/nist_%d/%s/data%2d.txt", test_number, testNames[testNameID], i+1);
+			sprintf(s[i], "%s/nist/%s/data%2d.txt", output_loc, testNames[testNameID], i+1);
 		else
-			sprintf(s[i], "results_parallel_process/nist_%d/%s/data%3d.txt", test_number, testNames[testNameID], i+1);
+			sprintf(s[i], "%s/nist/%s/data%3d.txt", output_loc, testNames[testNameID], i+1);
 	}
 	numread = 0;
 	m = numOfFiles/20;
@@ -197,7 +197,7 @@ cmp(const double *a, const double *b)
 }
 
 void
-postProcessResults(int option, int test_number)
+postProcessResults(char* output_loc)
 {
 	int		i, k, randomExcursionSampleSize, generalSampleSize;
 	int		passRate, case1, case2, numOfFiles = 2;
@@ -223,11 +223,11 @@ postProcessResults(int option, int test_number)
 					numOfFiles = 2;
 				for ( k=0; k<numOfFiles; k++ ) {
 					if ( k < 10 )
-						sprintf(s, "results_parallel_process/nist_%d/%s/data%1d.txt", test_number, testNames[i], k+1);
+						sprintf(s, "%s/nist/%s/data%1d.txt", output_loc, testNames[i], k+1);
 					else if ( k < 100 )
-						sprintf(s, "results_parallel_process/nist_%d/%s/data%2d.txt", test_number, testNames[i], k+1);
+						sprintf(s, "%s/nist/%s/data%2d.txt", output_loc, testNames[i], k+1);
 					else
-						sprintf(s, "results_parallel_process/nist_%d/%s/data%3d.txt", test_number, testNames[i], k+1);
+						sprintf(s, "%s/nist/%s/data%3d.txt", output_loc, testNames[i], k+1);
 					if ( (i == TEST_RND_EXCURSION) || (i == TEST_RND_EXCURSION_VAR) ) 
 						randomExcursionSampleSize = computeMetrics(s,i);
 					else
@@ -235,7 +235,7 @@ postProcessResults(int option, int test_number)
 				}
 			}
 			else {
-				sprintf(s, "results_parallel_process/nist_%d/%s/results.txt", test_number, testNames[i]);
+				sprintf(s, "%s/nist/%s/results.txt", output_loc, testNames[i]);
 				generalSampleSize = computeMetrics(s,i);
 			}
 		}
