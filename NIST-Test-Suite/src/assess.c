@@ -63,13 +63,13 @@ main(int argc, char *argv[])
 	char	*streamFile;	/* STREAM FILENAME     */
 	
 
-	if ( argc != 4 ) {
+	if ( argc != 5 ) {
 		printf("Usage: %s <stream length>\n", argv[0]);
 		printf("   <stream length> is the length of the individual bit stream(s) to be processed\n");
 		return 0;
 	}
 
-	tp.n = 2000000;
+	tp.n = (int)atoi(argv[4])/100;
 	tp.blockFrequencyBlockLength = 128;
 	tp.nonOverlappingTemplateBlockLength = 9;
 	tp.overlappingTemplateBlockLength = 9;
@@ -125,7 +125,7 @@ partitionResultFile(int numOfFiles, int numOfSequences, char* output_loc, int te
 	for ( i=0; i<MAXFILESPERMITTEDFORPARTITION; i++ )
 		s[i] = (char*)calloc(200, sizeof(char));
 	
-	sprintf(resultsDir, "%s/nist/%s/results.txt", output_loc, testNames[testNameID]);
+	sprintf(resultsDir, "%s/%s/results.txt", output_loc, testNames[testNameID]);
 	
 	if ( (fp[numOfFiles] = fopen(resultsDir, "r")) == NULL ) {
 		printf("%s", resultsDir);
@@ -135,11 +135,11 @@ partitionResultFile(int numOfFiles, int numOfSequences, char* output_loc, int te
 	
 	for ( i=0; i<numOfFiles; i++ ) {
 		if ( i < 10 )
-			sprintf(s[i], "%s/nist/%s/data%1d.txt", output_loc, testNames[testNameID], i+1);
+			sprintf(s[i], "%s/%s/data%1d.txt", output_loc, testNames[testNameID], i+1);
 		else if (i < 100)
-			sprintf(s[i], "%s/nist/%s/data%2d.txt", output_loc, testNames[testNameID], i+1);
+			sprintf(s[i], "%s/%s/data%2d.txt", output_loc, testNames[testNameID], i+1);
 		else
-			sprintf(s[i], "%s/nist/%s/data%3d.txt", output_loc, testNames[testNameID], i+1);
+			sprintf(s[i], "%s/%s/data%3d.txt", output_loc, testNames[testNameID], i+1);
 	}
 	numread = 0;
 	m = numOfFiles/20;
@@ -223,11 +223,11 @@ postProcessResults(char* output_loc)
 					numOfFiles = 2;
 				for ( k=0; k<numOfFiles; k++ ) {
 					if ( k < 10 )
-						sprintf(s, "%s/nist/%s/data%1d.txt", output_loc, testNames[i], k+1);
+						sprintf(s, "%s/%s/data%1d.txt", output_loc, testNames[i], k+1);
 					else if ( k < 100 )
-						sprintf(s, "%s/nist/%s/data%2d.txt", output_loc, testNames[i], k+1);
+						sprintf(s, "%s/%s/data%2d.txt", output_loc, testNames[i], k+1);
 					else
-						sprintf(s, "%s/nist/%s/data%3d.txt", output_loc, testNames[i], k+1);
+						sprintf(s, "%s/%s/data%3d.txt", output_loc, testNames[i], k+1);
 					if ( (i == TEST_RND_EXCURSION) || (i == TEST_RND_EXCURSION_VAR) ) 
 						randomExcursionSampleSize = computeMetrics(s,i);
 					else
@@ -235,7 +235,7 @@ postProcessResults(char* output_loc)
 				}
 			}
 			else {
-				sprintf(s, "%s/nist/%s/results.txt", output_loc, testNames[i]);
+				sprintf(s, "%s/%s/results.txt", output_loc, testNames[i]);
 				generalSampleSize = computeMetrics(s,i);
 			}
 		}

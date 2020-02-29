@@ -380,12 +380,12 @@ openOutputStreams(char* output_loc)
 	int		i, numOfOpenFiles = 0;
 	char	freqfn[200], summaryfn[200], statsDir[200], resultsDir[200];
 	
-	sprintf(freqfn, "%s/nist/freq.txt", output_loc);
+	sprintf(freqfn, "%s/freq.txt", output_loc);
 	if ( (freqfp = fopen(freqfn, "w")) == NULL ) {
 		printf("\t\tMAIN:  Could not open freq file: <%s>", freqfn);
 		exit(-1);
 	}
-	sprintf(summaryfn, "%s/nist/finalAnalysisReport.txt", output_loc);
+	sprintf(summaryfn, "%s/finalAnalysisReport.txt", output_loc);
 	if ( (summary = fopen(summaryfn, "w")) == NULL ) {
 		printf("\t\tMAIN:  Could not open stats file: <%s>", summaryfn);
 		exit(-1);
@@ -393,8 +393,8 @@ openOutputStreams(char* output_loc)
 	
 	for( i=1; i<=NUMOFTESTS; i++ ) {
 		if ( testVector[i] == 1 ) {
-			sprintf(statsDir, "%s/nist/%s/stats.txt", output_loc, testNames[i]);
-			sprintf(resultsDir, "%s/nist/%s/results.txt", output_loc, testNames[i]);
+			sprintf(statsDir, "%s/%s/stats.txt", output_loc, testNames[i]);
+			sprintf(resultsDir, "%s/%s/results.txt", output_loc, testNames[i]);
 			if ( (stats[i] = fopen(statsDir, "w")) == NULL ) {	/* STATISTICS LOG */
 				printf("ERROR: LOG FILES COULD NOT BE OPENED.\n");
 				printf("       MAX # OF OPENED FILES HAS BEEN REACHED = %d\n", numOfOpenFiles);
