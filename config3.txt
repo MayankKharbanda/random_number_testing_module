@@ -1,0 +1,342 @@
+#1,	nist,		Frequency,			1,	None,		25000000
+#2,	nist,		BlockFrequency,			2,	None,		25000000
+#3,	nist,		CumulativeSums,			3,	None,		25000000
+#4,	nist,		Runs,				4,	None,		25000000
+#5,	nist,		LongestRun,			5,	None,		25000000
+#6,	nist,		Rank,				6,	None,		25000000
+#7,	nist,		FFT,				7,	None,		25000000
+#8,	nist,		NonOverlappingTemplate,		8,	None,		25000000
+#9,	nist,		OverlappingTemplate,		9,	None,		25000000
+#10,	nist,		Universal,			10,	None,		25000000
+#11,	nist,		ApproximateEntropy,		11,	None,		25000000
+#12,	nist,		RandomExcursions,		12,	None,		25000000
+#13,	nist,		RandomExcursionsVariant,	13,	None,		25000000
+#14,	nist,		Serial,				14,	None,		25000000
+#15,	nist,		LinearComplexity,		15,	None,		25000000
+#1,	smallcrush,	smarsa__BirthdaySpacings,	1,	None,		43000000
+#2,	smallcrush,	sknuth__Collision,		2,	None,		43000000
+#3,	smallcrush,	sknuth__Gap,			3,	None,		220000000
+#4,	smallcrush,	sknuth__SimpPoker,		4,	None,		120000000
+#5,	smallcrush,	sknuth__CouponCollector, 	5,	None,		120000000
+#6,	smallcrush,	sknuth__MaxOft,			6, 	None,		54000000
+#7,	smallcrush,	svaria__WeightDistrib,		7,	None,		220000000
+#8,	smallcrush,	smarsa__MatrixRank,		8,	None,		33000000
+#9,	smallcrush,	sstring__HammingIndep,		9,	None,		140000000
+#10,	smallcrush,	swalk__RandomWalk1,		10,	None,		22000000
+#1,	crush,		smarsa__SerialOver,		1,	None,		2200000000
+#2,	crush,		smarsa__SerialOver,		2,	None,		1400000000
+#3,	crush,		smarsa__CollisionOver,		3,	None,		420000000
+#4,	crush,		smarsa__CollisionOver,		4,	None,		420000000
+#5,	crush,		smarsa__CollisionOver,		5,	None,		420000000
+#6,	crush,		smarsa__CollisionOver,		6,	None,		420000000
+#7,	crush,		smarsa__CollisionOver,		7,	None,		420000000
+#8,	crush,		smarsa__CollisionOver,		8,	None,		420000000
+#9,	crush,		smarsa__CollisionOver,		9,	None,		420000000
+#10,	crush,		smarsa__CollisionOver,		10,	None,		420000000
+#11,	crush,		smarsa__BirthdaySpacings,	11,	None,		820000000
+#12,	crush,		smarsa__BirthdaySpacings,	12,	None,		1400000000
+#13,	crush,		smarsa__BirthdaySpacings,	13,	None,		1800000000
+#14,	crush,		smarsa__BirthdaySpacings,	14,	None,		1800000000
+#15,	crush,		smarsa__BirthdaySpacings,	15,	None,		1800000000
+#16,	crush,		smarsa__BirthdaySpacings,	16,	None,		2100000000
+#17,	crush,		smarsa__BirthdaySpacings,	17,	None,		2100000000
+#18,	crush,		snpair__ClosePairs,		18,	None,		180000000
+#19,	crush,		snpair__ClosePairs,		19,	None,		260000000
+#20,	crush,		snpair__ClosePairs,		20,	None,		300000000
+#21,	crush,		snpair__ClosePairsBitMatch,	21,	None,		150000000
+#22,	crush,		snpair__ClosePairsBitMatch,	22,	None,		150000000
+#23,	crush,		sknuth__SimpPoker,		23,	None,		2700000000
+#24,	crush,		sknuth__SimpPoker,		24,	None,		2700000000
+#25,	crush,		sknuth__SimpPoker,		25,	None,		2700000000
+#26,	crush,		sknuth__SimpPoker,		26,	None,		2700000000
+#27,	crush,		sknuth__CouponCollector,	27,	None,		1500000000
+#28,	crush,		sknuth__CouponCollector,	28,	None,		1500000000
+#29,	crush,		sknuth__CouponCollector,	29,	None,		2100000000
+#30,	crush,		sknuth__CouponCollector,	30,	None,		2100000000
+#31,	crush,		sknuth__Gap,			31,	None,		3400000000
+#32,	crush,		sknuth__Gap,			32,	None,		3400000000
+#33,	crush,		sknuth__Gap,			33,	None,		5300000000
+#34,	crush,		sknuth__Gap,			34,	None,		5300000000
+#35,	crush,		sknuth__Run,			35,	None,		2200000000
+#36,	crush,		sknuth__Run,			36,	None,		2200000000
+#37,	crush,		sknuth__Permutation,		37,	None,		2200000000
+#38,	crush,		sknuth__Permutation,		38,	None,		2200000000
+#39,	crush,		sknuth__CollisionPermut,	39,	None,		2800000000
+#40,	crush,		sknuth__CollisionPermut,	40,	None,		2800000000
+#41,	crush,		sknuth__MaxOft,			41,	None,		2200000000
+#42,	crush,		sknuth__MaxOft,			42,	None,		2200000000
+#43,	crush,		sknuth__MaxOft,			43,	None,		820000000
+#44,	crush,		sknuth__MaxOft,			44,	None,		1400000000
+#45,	crush,		svaria__SampleProd,		45,	None,		420000000
+#46,	crush,		svaria__SampleProd,		46,	None,		1400000000
+#47,	crush,		svaria_SampleMean,		47,	None,		820000000
+#48,	crush,		svaria__SampleCorr,		48,	None,		2200000000
+#49,	crush,		svaria__AppearanceSpacings,	49,	None,		840000000
+#50,	crush,		svaria__AppearanceSpacings,	50,	None,		900000000
+#51,	crush,		svaria__WeightDistrib,		51,	None,		2200000000
+#52,	crush,		svaria__WeightDistrib,		52,	None,		2200000000
+#53,	crush,		svaria__WeightDistrib,		53,	None,		2200000000
+#54,	crush,		svaria__WeightDistrib,		54,	None,		2200000000
+#55,	crush,		svaria__SumCollector,		55,	None,		1800000000
+#56,	crush,		smarsa__MatrixRank,		56,	None,		500000000
+#57,	crush,		smarsa__MatrixRank,		57,	None,		1600000000
+#58,	crush,		smarsa__MatrixRank,		58,	None,		620000000
+#59,	crush,		smarsa__MatrixRank,		59,	None,		2000000000
+#60,	crush,		smarsa__MatrixRank,		60,	None,		400000000
+#61,	crush,		smarsa__MatrixRank,		61,	None,		1300000000
+#62,	crush,		smarsa__Savir2,			62,	None,		2600000000
+#63,	crush,		smarsa__GCD,			63,	None,		820000000
+#64,	crush,		smarsa__GCD,			64,	None,		340000000
+#65,	crush,		swalk__RandomWalk1,		65,	None,		620000000
+#66,	crush,		swalk__RandomWalk1,		66,	None,		380000000
+#67,	crush,		swalk__RandomWalk1,		67,	None,		700000000
+#68,	crush,		swalk__RandomWalk1,		68,	None,		420000000
+#69,	crush,		swalk__RandomWalk1,		69,	None,		690000000
+#70,	crush,		swalk__RandomWalk1,		70,	None,		420000000
+#71,	crush,		scomp__LinearComp,		71,	None,		12000000
+#72,	crush,		scomp__LinearComp,		72,	None,		12000000
+#73,	crush,		scomp__LempelZiv,		73,	None,		54000000
+#74,	crush,		sspectral__Fourier3,		74,	None,		130000000
+#75,	crush,		sspectral__Fourier3,		75,	None,		350000000
+#76,	crush,		sstring__LongestHeadRun,	76,	None,		1500000000
+#77,	crush,		sstring__LongestHeadRun,	77,	None,		1400000000
+#78,	crush,		sstring__PeriodsInStrings,	78,	None,		1400000000
+#79,	crush,		sstring__PeriodsInStrings,	79,	None,		1400000000
+#80,	crush,		sstring__HammingWeight2,	80,	None,		1500000000
+#81,	crush,		sstring__HammingWeight2,	81,	None,		1400000000
+#82,	crush,		sstring__HammingCorr,		82,	None,		2200000000
+#83,	crush,		sstring__HammingCorr,		83,	None,		2200000000
+#84,	crush,		sstring__HammingCorr,		84,	None,		1800000000
+#85,	crush,		sstring__HammingIndep,		85,	None,		2600000000
+#86,	crush,		sstring__HammingIndep,		86,	None,		2600000000
+#87,	crush,		sstring__HammingIndep,		87,	None,		2600000000
+#88,	crush,		sstring__HammingIndep,		88,	None,		2600000000
+#89,	crush,		sstring__HammingIndep,		89,	None,		3400000000
+#90,	crush,		sstring__HammingIndep,		90,	None,		980000000
+#91,	crush,		sstring__Run,			91,	None,		550000000
+#92,	crush,		sstring__Run,			92,	None,		1800000000
+#93,	crush,		sstring__AutoCor,		93,	None,		1500000000
+#94,	crush,		sstring__AutoCor,		94,	None,		2200000000
+#95,	crush,		sstring__AutoCor,		95,	None,		1500000000
+#96,	crush,		sstring__AutoCor,		96,	None,		2200000000
+#1,	bigcrush,	smarsa__SerialOver,		1,	None,		4200000000
+#2,	bigcrush,	smarsa__SerialOver,		2,	None,		4200000000
+#3,	bigcrush,	smarsa__CollisionOver,		3,	None,		2600000000
+#4,	bigcrush,	smarsa__CollisionOver,		4,	None,		2600000000
+#5,	bigcrush,	smarsa__CollisionOver,		5,	None,		2600000000
+#6,	bigcrush,	smarsa__CollisionOver,		6,	None,		2600000000
+#7,	bigcrush,	smarsa__CollisionOver,		7,	None,		2600000000
+#8,	bigcrush,	smarsa__CollisionOver,		8,	None,		2600000000
+#9,	bigcrush,	smarsa__CollisionOver,		9,	None,		2600000000
+#10,	bigcrush,	smarsa__CollisionOver,		10,	None,		2600000000
+#11,	bigcrush,	smarsa__CollisionOver,		11,	None,		2600000000
+#12,	bigcrush,	smarsa__CollisionOver,		12,	None,		2600000000
+#13,	bigcrush,	smarsa__BirthdaySpacings,	13,	None,		8200000000
+#14,	bigcrush,	smarsa__BirthdaySpacings,	14,	None,		5000000000
+#15,	bigcrush,	smarsa__BirthdaySpacings,	15,	None,		9800000000
+#16,	bigcrush,	smarsa__BirthdaySpacings,	16,	None,		13000000000
+#17,	bigcrush,	smarsa__BirthdaySpacings,	17,	None,		13000000000
+#18,	bigcrush,	smarsa__BirthdaySpacings,	18,	None,		21000000000
+#19,	bigcrush,	smarsa__BirthdaySpacings,	19,	None,		21000000000
+#20,	bigcrush,	smarsa__BirthdaySpacings,	20,	None,		40000000000
+#21,	bigcrush,	smarsa__BirthdaySpacings,	21,	None,		40000000000
+#22,	bigcrush,	snpair__ClosePairs,		22,	None,		2300000000
+#23,	bigcrush,	snpair__ClosePairs,		23,	None,		1800000000
+#24,	bigcrush,	snpair__ClosePairs,		24,	None,		1200000000
+#25,	bigcrush,	snpair__ClosePairs,		25,	None,		670000000
+#26,	bigcrush,	sknuth__SimpPoker,		26,	None,		14000000000
+#27,	bigcrush,	sknuth__SimpPoker,		27,	None,		14000000000
+#28,	bigcrush,	sknuth__SimpPoker,		28,	None,		14000000000
+#29,	bigcrush,	sknuth__SimpPoker,		29,	None,		14000000000
+#30,	bigcrush,	sknuth__CouponCollector,	30,	None,		19000000000
+#31,	bigcrush,	sknuth__CouponCollector,	31,	None,		19000000000
+#32,	bigcrush,	sknuth__CouponCollector,	32,	None,		19000000000
+#33,	bigcrush,	sknuth__CouponCollector,	33,	None,		19000000000
+#34,	bigcrush,	sknuth__Gap,			34,	None,		34000000000
+#35,	bigcrush,	sknuth__Gap,			35,	None,		40000000000
+#36,	bigcrush,	sknuth__Gap,			36,	None,		53000000000
+#37,	bigcrush,	sknuth__Gap,			37,	None,		42000000000
+#38,	bigcrush,	sknuth__Run,			38,	None,		22000000000
+#39,	bigcrush,	sknuth__Run,			39,	None,		42000000000
+#40,	bigcrush,	sknuth__Permutation,		40,	None,		14000000000
+#41,	bigcrush,	sknuth__Permutation,		41,	None,		22000000000
+#42,	bigcrush,	sknuth__Permutation,		42,	None,		16000000000
+#43,	bigcrush,	sknuth__Permutation,		43,	None,		22000000000
+#44,	bigcrush,	sknuth__CollisionPermut,	44,	None,		24000000000
+#45,	bigcrush,	sknuth__CollisionPermut,	45,	None,		24000000000
+#46,	bigcrush,	sknuth__MaxOft,			46,	None,		14000000000
+#47,	bigcrush,	sknuth__MaxOft,			47,	None,		21000000000
+#48,	bigcrush,	sknuth__MaxOft,			48,	None,		21000000000
+#49,	bigcrush,	sknuth__MaxOft,			49,	None,		27000000000
+#50,	bigcrush,	svaria__SampleProd,		50,	None,		14000000000
+#51,	bigcrush,	svaria__SampleProd,		51,	None,		14000000000
+#52,	bigcrush,	svaria__SampleProd,		52,	None,		21000000000
+#53,	bigcrush,	svaria__SampleMean,		53,	None,		2600000000
+#54,	bigcrush,	svaria__SampleMean,		54,	None,		2600000000
+#55,	bigcrush,	svaria__SampleCorr,		55,	None,		8200000000
+#56,	bigcrush,	svaria__SampleCorr,		56,	None,		8200000000
+#57,	bigcrush,	svaria__AppearanceSpacings,	57,	None,		22000000000
+#58,	bigcrush,	svaria__AppearanceSpacings,	58,	None,		22000000000
+#59,	bigcrush,	svaria__WeightDistrib,		59,	None,		22000000000
+#60,	bigcrush,	svaria__WeightDistrib,		60,	None,		22000000000
+#61,	bigcrush,	svaria__WeightDistrib,		61,	None,		22000000000
+#62,	bigcrush,	svaria__WeightDistrib,		62,	None,		22000000000
+#63,	bigcrush,	svaria__WeightDistrib,		63,	None,		22000000000
+#64,	bigcrush,	svaria__WeightDistrib,		64,	None,		22000000000
+#65,	bigcrush,	svaria__SumCollector,		65,	None,		43000000000
+#66,	bigcrush,	smarsa__MatrixRank,		66,	None,		7400000000
+#67,	bigcrush,	smarsa__MatrixRank,		67,	None,		7400000000
+#68,	bigcrush,	smarsa__MatrixRank,		68,	None,		5200000000
+#69,	bigcrush,	smarsa__MatrixRank,		69,	None,		5200000000
+#70,	bigcrush,	smarsa__MatrixRank,		70,	None,		550000000
+#71,	bigcrush,	smarsa__MatrixRank,		71,	None,		290000000
+#72,	bigcrush,	smarsa__Savir2,			72,	None,		14000000000
+#73,	bigcrush,	smarsa__GCD,			73,	None,		4200000000
+#74,	bigcrush,	swalk__RandomWalk1,		74,	None,		4200000000
+#75,	bigcrush,	swalk__RandomWalk1,		75,	None,		4200000000
+#76,	bigcrush,	swalk__RandomWalk1,		76,	None,		4200000000
+#77,	bigcrush,	swalk__RandomWalk1,		77,	None,		4200000000
+#78,	bigcrush,	swalk__RandomWalk1,		78,	None,		2800000000
+#79,	bigcrush,	swalk__RandomWalk1,		79,	None,		2800000000
+#80,	bigcrush,	scomp__LinearComp,		80,	None,		12000000
+#81,	bigcrush,	scomp__LinearComp,		81,	None,		12000000
+#82,	bigcrush,	scomp__LempelZiv,		82,	None,		200000000
+#83,	bigcrush,	scomp__LempelZiv,		83,	None,		380000000
+#84,	bigcrush,	sspectral__Fourier3,		84,	None,		2300000000
+#85,	bigcrush,	sspectral__Fourier3,		85,	None,		2300000000
+#86,	bigcrush,	sstring__LongestHeadRun,	86,	None,		15000000000
+#87,	bigcrush,	sstring__LongestHeadRun,	87,	None,		15000000000
+#88,	bigcrush,	sstring__PeriodsInStrings,	88,	None,		22000000000
+#89,	bigcrush,	sstring__PeriodsInStrings,	89,	None,		22000000000
+#90,	bigcrush,	sstring__HammingWeight2,	90,	None,		15000000000
+#91,	bigcrush,	sstring__HammingWeight2,	91,	None,		15000000000
+#92,	bigcrush,	sstring__HammingCorr,		92,	None,		14000000000
+#93,	bigcrush,	sstring__HammingCorr,		93,	None,		14000000000
+#94,	bigcrush,	sstring__HammingCorr,		94,	None,		50000000000
+#95,	bigcrush,	sstring__HammingIndep,		95,	None,		26000000000
+#96,	bigcrush,	sstring__HammingIndep,		96,	None,		26000000000
+#97,	bigcrush,	sstring__HammingIndep,		97,	None,		20000000000
+#98,	bigcrush,	sstring__HammingIndep,		98,	None,		20000000000
+#99,	bigcrush,	sstring__HammingIndep,		99,	None,		21000000000
+#100,	bigcrush,	sstring__HammingIndep,		100,	None,		21000000000
+#101,	bigcrush,	sstring__Run,			101,	None,		12000000000
+#102,	bigcrush,	sstring__Run,			102,	None,		12000000000
+#103,	bigcrush,	sstring__AutoCor,		103,	None,		15000000000
+#104,	bigcrush,	sstring__AutoCor,		104,	None,		15000000000
+#105,	bigcrush,	sstring__AutoCor,		105,	None,		15000000000
+#106,	bigcrush,	sstring__AutoCor,		106,	None,		15000000000
+1,	dieharder,	Diehard_Birthdays_Test,				0,	None,		4*100*100*1385
+2,	dieharder,	Diehard_OPERM5_Test,				1,	None,		4*1000000*10*12
+3,	dieharder,	Diehard_32x32_Binary_Rank_Test,			2,	None,		4*40000*100*35
+4,	dieharder,	Diehard_6x8_Binary_Rank_Test,			3,	None,		4*100000*100*8
+5,	dieharder,	Diehard_Bitstream_Test,				4,	None,		4*2097152*18
+6,	dieharder,	Diehard_OPSO,					5,	None,		4*2097152*105
+7,	dieharder,	Diehard_OQSO_Test,				6,	None,		4*2097152*72
+8,	dieharder,	Diehard_DNA_Test,				7,	None,		4*2097152*37
+9,	dieharder,	Diehard_Count_the_1s_stream_Test,		8,	None,		4*256000*65
+10,	dieharder,	Diehard_Count_the_1s_Test_byte,			9,	None,		4*256000*100*6
+11,	dieharder,	Diehard_Parking_Lot_Test,			10,	None,		4*12000*100*11
+12,	dieharder,	Diehard_Minimum_Distance_2d_Circle_Test,	11,	None,		4*8000*100*15
+13,	dieharder,	Diehard_3d_Sphere_Minimum_Distance_Test,	12,	None,		4*4000*100*29
+14,	dieharder,	Diehard_Squeeze_Test,				13,	None,		4*100000*100*25
+15,	dieharder,	Diehard_Sums_Test,				14,	None,		4*100*100*1002
+16,	dieharder,	Diehard_Runs_Test,				15,	None,		4*100000*100*3
+17,	dieharder,	Diehard_Craps_Test,				16,	None,		4*200000*100*8
+18,	dieharder,	Marsaglia_and_Tsang_GCD_Test,			17,	None,		4*10000000*100*3
+19,	dieharder,	STS_Monobit_Test,				100,	None,		4*100000*100*3
+20,	dieharder,	STS_Runs_Test,					101,	None,		4*100000*100*3
+21,	dieharder,	STS_Serial_Test_Generalized,			102,	None,		4*100000*100*3
+22,	dieharder,	RGB_Bit_Distribution_Test,			200,	None,		4*100000*100*4,		1
+23,	dieharder,	RGB_Bit_Distribution_Test,			200,	None,		4*100000*100*6,		2
+24,	dieharder,	RGB_Bit_Distribution_Test,			200,	None,		4*100000*100*8,		3
+25,	dieharder,	RGB_Bit_Distribution_Test,			200,	None,		4*100000*100*10,	4
+26,	dieharder,	RGB_Bit_Distribution_Test,			200,	None,		4*100000*100*12,	5
+27,	dieharder,	RGB_Bit_Distribution_Test,			200,	None,		4*100000*100*14,	6
+28,	dieharder,	RGB_Bit_Distribution_Test,			200,	None,		4*100000*100*16,	7
+29,	dieharder,	RGB_Bit_Distribution_Test,			200,	None,		4*100000*100*18,	8
+30,	dieharder,	RGB_Bit_Distribution_Test,			200,	None,		4*100000*100*20,	9
+31,	dieharder,	RGB_Bit_Distribution_Test,			200,	None,		4*100000*100*22,	10
+32,	dieharder,	RGB_Bit_Distribution_Test,			200,	None,		4*100000*100*24,	11
+33,	dieharder,	RGB_Bit_Distribution_Test,			200,	None,		4*100000*100*26,	12
+34,	dieharder,	RGB_Generalized_Minimum_Distance_Test,		201,	None,		4*10000*1000*4,		2
+35,	dieharder,	RGB_Generalized_Minimum_Distance_Test,		201,	None,		4*10000*1000*4,		3
+36,	dieharder,	RGB_Generalized_Minimum_Distance_Test,		201,	None,		4*10000*1000*6,		4
+37,	dieharder,	RGB_Generalized_Minimum_Distance_Test,		201,	None,		4*10000*1000*7,		5
+38,	dieharder,	RGB_Permutations_Test,				202,	None,		4*100000*100*4,		2
+39,	dieharder,	RGB_Permutations_Test,				202,	None,		4*100000*100*5,		3
+40,	dieharder,	RGB_Permutations_Test,				202,	None,		4*100000*100*6,		4
+41,	dieharder,	RGB_Permutations_Test,				202,	None,		4*100000*100*7,		5
+42,	dieharder,	RGB_Lagged_Sum_Test,				203,	None,		4*1000000*100*2,	0
+43,	dieharder,	RGB_Lagged_Sum_Test,				203,	None,		4*1000000*100*3,	1
+44,	dieharder,	RGB_Lagged_Sum_Test,				203,	None,		4*1000000*100*4,	2
+45,	dieharder,	RGB_Lagged_Sum_Test,				203,	None,		4*1000000*100*5,	3
+46,	dieharder,	RGB_Lagged_Sum_Test,				203,	None,		4*1000000*100*6,	4
+47,	dieharder,	RGB_Lagged_Sum_Test,				203,	None,		4*1000000*100*7,	5
+48,	dieharder,	RGB_Lagged_Sum_Test,				203,	None,		4*1000000*100*8,	6
+49,	dieharder,	RGB_Lagged_Sum_Test,				203,	None,		4*1000000*100*9,	7
+50,	dieharder,	RGB_Lagged_Sum_Test,				203,	None,		4*1000000*100*10,	8
+51,	dieharder,	RGB_Lagged_Sum_Test,				203,	None,		4*1000000*100*11,	9
+52,	dieharder,	RGB_Lagged_Sum_Test,				203,	None,		4*1000000*100*12,	10
+53,	dieharder,	RGB_Lagged_Sum_Test,				203,	None,		4*1000000*100*13,	11
+54,	dieharder,	RGB_Lagged_Sum_Test,				203,	None,		4*1000000*100*14,	12
+55,	dieharder,	RGB_Lagged_Sum_Test,				203,	None,		4*1000000*100*15,	13
+56,	dieharder,	RGB_Lagged_Sum_Test,				203,	None,		4*1000000*100*16,	14
+57,	dieharder,	RGB_Lagged_Sum_Test,				203,	None,		4*1000000*100*17,	15
+58,	dieharder,	RGB_Lagged_Sum_Test,				203,	None,		4*1000000*100*18,	16
+59,	dieharder,	RGB_Lagged_Sum_Test,				203,	None,		4*1000000*100*19,	17
+60,	dieharder,	RGB_Lagged_Sum_Test,				203,	None,		4*1000000*100*20,	18
+61,	dieharder,	RGB_Lagged_Sum_Test,				203,	None,		4*1000000*100*21,	19
+62,	dieharder,	RGB_Lagged_Sum_Test,				203,	None,		4*1000000*100*22,	20
+63,	dieharder,	RGB_Lagged_Sum_Test,				203,	None,		4*1000000*100*23,	21
+64,	dieharder,	RGB_Lagged_Sum_Test,				203,	None,		4*1000000*100*24,	22
+65,	dieharder,	RGB_Lagged_Sum_Test,				203,	None,		4*1000000*100*25,	23
+66,	dieharder,	RGB_Lagged_Sum_Test,				203,	None,		4*1000000*100*26,	24
+67,	dieharder,	RGB_Lagged_Sum_Test,				203,	None,		4*1000000*100*27,	25
+68,	dieharder,	RGB_Lagged_Sum_Test,				203,	None,		4*1000000*100*28,	26
+69,	dieharder,	RGB_Lagged_Sum_Test,				203,	None,		4*1000000*100*29,	27
+70,	dieharder,	RGB_Lagged_Sum_Test,				203,	None,		4*1000000*100*30,	28
+71,	dieharder,	RGB_Lagged_Sum_Test,				203,	None,		4*1000000*100*31,	29
+72,	dieharder,	RGB_Lagged_Sum_Test,				203,	None,		4*1000000*100*32,	30
+73,	dieharder,	RGB_Lagged_Sum_Test,				203,	None,		4*1000000*100*33,	31
+74,	dieharder,	RGB_Lagged_Sum_Test,				203,	None,		4*1000000*100*34,	32
+75,	dieharder,	RGB_Kolmogorov-Smirnov_Test,			204,	None,		4*10000*1000*3
+76,	dieharder,	Byte_Distribution,				205,	None,		4*51200000*4
+77,	dieharder,	DAB_DCT,					206,	None,		4*50000*457
+78,	dieharder,	DAB_Fill_Tree_Test,				207,	None,		4*15000000*9
+79,	dieharder,	DAB_Fill_Tree_2_Test,				208,	None,		4*5000000*8
+80,	dieharder,	DAB_Monobit_2_Test,				209,	None,		4*65000000*2
+1,	rabbit,		smultin__MultinomialBitsOver,		1,	None,		25000000
+2,	rabbit,		snpair__ClosePairsBitMatch,		2,	None,		25000000
+3,	rabbit,		snpair__ClosePairsBitMatch,		3,	None,		25000000
+4,	rabbit,		svaria__AppearanceSpacings,		4,	None,		25000000
+5,	rabbit,		scomp__LinearComp,			5,	None,		25000000
+6,	rabbit,		scomp__LempelZiv,			6,	None,		25000000
+7,	rabbit,		sspectral__Fourier1,			7,	None,		25000000
+8,	rabbit,		sspectral__Fourier3,			8,	None,		25000000
+9,	rabbit,		sstring__LongestHeadRun,		9,	None,		25000000
+10,	rabbit,		sstring__PeriodsInStrings,		10,	None,		25000000
+11,	rabbit,		sstring__HammingWeight,			11,	None,		25000000
+12,	rabbit,		sstring__HammingCorr,			12,	None,		25000000
+13,	rabbit,		sstring__HammingCorr,			13,	None,		25000000
+14,	rabbit,		sstring__HammingCorr,			14,	None,		25000000
+15,	rabbit,		sstring__HammingIndep,			15,	None,		25000000
+16,	rabbit,		sstring__HammingIndep,			16,	None,		25000000
+17,	rabbit,		sstring__HammingIndep,			17,	None,		25000000
+18,	rabbit,		sstring__AutoCor,			18,	None,		25000000
+19,	rabbit,		sstring__AutoCor,			19,	None,		25000000
+20,	rabbit,		sstring__Run,				20,	None,		25000000
+21,	rabbit,		smarsa__MatrixRank,			21,	None,		25000000
+22,	rabbit,		smarsa__MatrixRank,			22,	None,		25000000
+23,	rabbit,		smarsa__MatrixRank,			23,	None,		25000000
+24,	rabbit,		swalk__RandomWalk1,			24,	None,		25000000
+25,	rabbit,		swalk__RandomWalk1,			25,	None,		25000000
+26,	rabbit,		swalk__RandomWalk1,			26,	None,		25000000
+1,	alphabit,	smultin__MultinomialBitsOver,		1,	None,		25000000
+2,	alphabit,	smultin__MultinomialBitsOver,		2,	None,		25000000
+3,	alphabit,	smultin__MultinomialBitsOver,		3,	None,		25000000
+4,	alphabit,	smultin__MultinomialBitsOver,		4,	None,		25000000
+5,	alphabit,	sstring__HammingIndep,			5,	None,		25000000
+6,	alphabit,	sstring__HammingIndep,			6,	None,		25000000
+7,	alphabit,	sstring__HammingCorr,			7,	None,		25000000
+8,	alphabit,	swalk__RandomWalk1,			8,	None,		25000000
+9,	alphabit,	swalk__RandomWalk1,			9,	None,		25000000
