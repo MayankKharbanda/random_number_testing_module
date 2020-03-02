@@ -19,6 +19,9 @@ Tests = config.config(config.TESTS_FILE)    #contains the list of all the
 file_seek = 0   #contains location in the random source from 
                 #where the numbers are taken. 
 
+with open(config.RANDOM_SOURCE,'r') as fr:
+    fr.seek(0,2)
+    SOURCE_FILE_SIZE = fr.tell()
 
 
 
@@ -242,12 +245,16 @@ if(process_list!=-1):
                 
                 
                 #random bin file creation for the test
-                #TODO seek uncomment and read in loop
                 with open(config.RANDOM_SOURCE,'rb') as rf, open(test_file,'wb') as wf:
-                    #wf.seek(file_seek, 0)
+                    
                     file_size = min(int(Tests[tests_completed][config.SIZE]), config.MAX_FILE_SIZE)
+
+                    if(file_seek + file_size > SOURCE_FILE_SIZE):
+                        file_seek = 0
+                    
+                    wf.seek(file_seek, 0)
                     wf.write(rf.read(file_size))
-                    #file_seek = file_seek + file_size
+                    file_seek = file_seek + file_size
                 
                 
                 print(f'Running test {process_list[i][test_process[i]][config.NAME]} in core {i}')
@@ -307,12 +314,16 @@ else:
                 
                 
                 #random bin file creation for the test
-                #TODO seek uncomment and read in loop
                 with open(config.RANDOM_SOURCE,'rb') as rf, open(test_file,'wb') as wf:
-                    #wf.seek(file_seek, 0)
+                    
                     file_size = min(int(Tests[tests_completed][config.SIZE]), config.MAX_FILE_SIZE)
+                    
+                    if(file_seek + file_size > SOURCE_FILE_SIZE):
+                        file_seek = 0
+                    
+                    wf.seek(file_seek, 0)
                     wf.write(rf.read(file_size))
-                    #file_seek = file_seek + file_size
+                    file_seek = file_seek + file_size
                 
                 
                 print(f'Running test {Tests[tests_completed][config.NAME]} in core {i}')
