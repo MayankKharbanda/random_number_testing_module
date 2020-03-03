@@ -16,7 +16,7 @@ N_TUPL = 5
 TESTS_FILE = 'config.txt'   #contains location of the configuration file.
 
 #contains location of random source.
-RANDOM_SOURCE = 'random_numbers_time/dieharder203.bin'   
+RANDOM_SOURCE = 'dieharder203.bin'   
 
 
 #contains location where results are to be stored

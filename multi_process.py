@@ -386,7 +386,6 @@ module_running_time = module_end_time - module_start_time
 with open(f'{config.RESULT_DEST}/wait_time.txt','w') as fw:
     fw.write("Total_wait_time (in s) :"+str(total_wait_time)+"\n")
     fw.write("Module running time (in s) :"+str(module_running_time)+"\n")
-    fw.write('SNO'.rjust(3))
     fw.write('SUITE'.rjust(15))
     fw.write('NAME'.rjust(30))
     fw.write('ID'.rjust(3))
@@ -395,7 +394,6 @@ with open(f'{config.RESULT_DEST}/wait_time.txt','w') as fw:
     fw.write('N_TUPLE'.rjust(10))
     fw.write("\n")
     for Test in range(len(Tests)):
-        fw.write(Tests[Test][config.SNO].rjust(3))
         fw.write(Tests[Test][config.SUITE].rjust(15))
         fw.write(Tests[Test][config.NAME].rjust(30))
         fw.write(Tests[Test][config.ID].rjust(3))
