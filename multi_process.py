@@ -3,7 +3,7 @@ import os
 import time
 from process_allocation_algo import process_alloc
 import config
-
+from test_reader import test_reader
 
 
 #contains start time of running of the whole module
@@ -11,7 +11,7 @@ module_start_time = time.time()
 
 
 
-Tests = config.config(config.TESTS_FILE)    #contains the list of all the 
+Tests = test_reader(config.TESTS_FILE)    #contains the list of all the 
                                             #tests to run on random number generator.
 
 
