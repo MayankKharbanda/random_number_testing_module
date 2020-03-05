@@ -252,7 +252,7 @@ if(process_list!=-1):
                     if(file_seek + file_size > SOURCE_FILE_SIZE):
                         file_seek = 0
                     
-                    wf.seek(file_seek, 0)
+                    rf.seek(file_seek, 0)
                     wf.write(rf.read(file_size))
                     file_seek = file_seek + file_size
                 
@@ -321,7 +321,7 @@ else:
                     if(file_seek + file_size > SOURCE_FILE_SIZE):
                         file_seek = 0
                     
-                    wf.seek(file_seek, 0)
+                    rf.seek(file_seek, 0)
                     wf.write(rf.read(file_size))
                     file_seek = file_seek + file_size
                 
