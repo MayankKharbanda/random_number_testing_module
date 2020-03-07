@@ -1,4 +1,5 @@
 import config
+import sys
 
 '''
 test_reader function is used to initialize the tests list from config file, 
@@ -19,14 +20,16 @@ def test_reader(file):
     
     with open(file,'r') as f:
         
-        for line in f.readlines():
+        file_data = f.readlines()
+        
+        for line_number in range(len(file_data)):
             
             flag=0
             
-            if(line.startswith('#')):
+            if(file_data[line_number].startswith('#')):
                                continue
             
-            line_data = line.split(',')
+            line_data = file_data[line_number].split(',')
             
             for i in range(len(line_data)):
                 line_data[i] = line_data[i].strip()
@@ -39,6 +42,23 @@ def test_reader(file):
                 tests.append(line_data[0:i+1])
             else:
                 tests.append(line_data[0:i])
+            
+            if(len(tests[-1]) != 6 or len(tests[-1]) != 5):
+                print('!!!Error in line {line_number} in tests file, unknown test type!!!')
+                sys.exit()
+            
+            if(tests[-1][config.SUITE]=='dieharder' and 
+               (tests[-1][config.ID] == '200' 
+                or tests[-1][config.ID] == '201' 
+                or tests[-1][config.ID] == '202' 
+                or tests[-1][config.ID] == '203')):
+                if(len(tests[-1]) != 6):
+                    print('!!!Error in line {line_number} in tests file, parameters incomplete or unknown test!!!')
+                    sys.exit()
+                
+            elif(len(tests[-1]) != 5):
+                print('!!!Error in line {line_number} in tests file, parameters incomplete or unknown test!!!')
+                sys.exit()
             
             tests[-1][config.SIZE] = str(eval(tests[-1][config.SIZE]))      #calculate size of the 
                                                         #file required, if it is 
