@@ -48,7 +48,7 @@ def process_alloc(cores, Tests):
 
     
     #sorting list wrt time to execute
-    tests_copy.sort(key = lambda x:int(x[config.TIME]))
+    tests_copy.sort(key = lambda x:float(x[config.TIME]))
 
 
     
@@ -60,7 +60,7 @@ def process_alloc(cores, Tests):
     #Total time required to execute x-n tests, where x is total number 
     #of tests, and n is the number of cores in the list.
     if(len(tests_copy)>cores):
-        total_time = sum(int(test[config.TIME]) for test in tests_copy[:-cores])
+        total_time = sum(float(test[config.TIME]) for test in tests_copy[:-cores])
 
 
     
@@ -86,11 +86,11 @@ def process_alloc(cores, Tests):
     #in greedy algorithm.
     for i in range(cores-1):
         if(len(tests_copy)>0):
-            temp_sum = int(tests_copy[-1][config.TIME])
+            temp_sum = float(tests_copy[-1][config.TIME])
             process_list[-(i+1)].insert(0, tests_copy[-1])
             del tests_copy[-1]
             if(len(tests_copy)>0):
-                temp_sum = temp_sum+int(tests_copy[0][config.TIME])
+                temp_sum = temp_sum+float(tests_copy[0][config.TIME])
                 j = 0
                 while(temp_sum < approx_time_each_process):
                     process_list[-(i+1)].insert(j, tests_copy[0])
@@ -98,7 +98,7 @@ def process_alloc(cores, Tests):
                     j = j+1
                     if(len(tests_copy) == 0):
                         break
-                    temp_sum = temp_sum+int(tests_copy[0][config.TIME])
+                    temp_sum = temp_sum+float(tests_copy[0][config.TIME])
 
 
     #adding all left over tests to the first core
