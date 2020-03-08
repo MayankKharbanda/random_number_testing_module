@@ -4,10 +4,47 @@ import time
 from process_allocation_algo import process_alloc
 import config
 from test_reader import test_reader
+from signal import signal, SIGINT
+from sys import exit
 
 
-#TODO open test file output from last iteration for tests
 #TODO start next module when last one running
+#TODO test result on print screen
+#TODO generate binary file on different core
+#TODO add param from command line
+#TODO should I remove last incomplete iteration from directory
+
+
+
+
+def exit_func(signal_received, frame):  
+    
+    '''
+    this is the last function,
+    which runs when you press ctrl+c 
+    to exit from infinite loop of tests.
+    '''
+    
+    
+    print('SIGINT or CTRL-C detected.')
+    
+    
+    #remove the temp directory
+    os.system(f'rm -r {config.TEMP_DEST}/')
+
+
+    module_end_time = time.time()       #sevaluating module running time and storing it
+    module_running_time = module_end_time - module_start_time
+
+
+    with open(f'{config.RESULT_DEST}/module_report.txt','w') as fw:
+        fw.write("Module running time (in s) :"+str(module_running_time)+"\n")
+    
+    print('EXITING...')
+    
+    
+    exit(0)
+
 
 
 #contains start time of running of the whole module
@@ -174,6 +211,9 @@ process_event_global.set()
 process_arr = [None]*config.CORES
 
 
+signal(SIGINT, exit_func)
+
+
 iteration_over_tests = 0
 
 
@@ -260,7 +300,7 @@ while(True):        #infinite loop over tests_file
                     #random bin file creation for the test
                     with open(config.RANDOM_SOURCE,'rb') as rf, open(test_file,'wb') as wf:
                     
-                        file_size = min(int(Tests[tests_completed][config.SIZE]), config.MAX_FILE_SIZE)
+                        file_size = min(int(process_list[i][test_process[i]][config.SIZE]), config.MAX_FILE_SIZE)
 
                         if(file_seek + file_size > SOURCE_FILE_SIZE):
                             file_seek = 0
@@ -405,16 +445,4 @@ while(True):        #infinite loop over tests_file
             if(len(Tests[Test]) == config.N_TUPL+1):
                 fw.write(Tests[Test][config.N_TUPL].rjust(10))
             fw.write("\n")
-
-
-
-#remove the temp directory
-os.system(f'rm -r {config.TEMP_DEST}/')
-
-
-module_end_time = time.time()
-module_running_time = module_end_time - module_start_time
-
-
-with open(f'{config.RESULT_DEST}/module_report.txt','w') as fw:
-    fw.write("Module running time (in s) :"+str(module_running_time)+"\n")
+            

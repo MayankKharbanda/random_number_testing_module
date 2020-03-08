@@ -1,5 +1,5 @@
 import config
-import sys
+from sys import exit
 
 '''
 test_reader function is used to initialize the tests list from config file, 
@@ -43,9 +43,9 @@ def test_reader(file):
             else:
                 tests.append(line_data[0:i])
             
-            if(len(tests[-1]) != 6 or len(tests[-1]) != 5):
+            if(len(tests[-1]) != 6 and len(tests[-1]) != 5):
                 print('!!!Error in line {line_number} in tests file, unknown test type!!!')
-                sys.exit()
+                exit(0)
             
             if(tests[-1][config.SUITE]=='dieharder' and 
                (tests[-1][config.ID] == '200' 
@@ -54,11 +54,11 @@ def test_reader(file):
                 or tests[-1][config.ID] == '203')):
                 if(len(tests[-1]) != 6):
                     print('!!!Error in line {line_number} in tests file, parameters incomplete or unknown test!!!')
-                    sys.exit()
+                    exit(0)
                 
             elif(len(tests[-1]) != 5):
                 print('!!!Error in line {line_number} in tests file, parameters incomplete or unknown test!!!')
-                sys.exit()
+                exit(0)
             
             tests[-1][config.SIZE] = str(eval(tests[-1][config.SIZE]))      #calculate size of the 
                                                         #file required, if it is 
