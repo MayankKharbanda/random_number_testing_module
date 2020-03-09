@@ -44,7 +44,7 @@ def test_reader(file):
                 tests.append(line_data[0:i])
             
             if(len(tests[-1]) != 6 and len(tests[-1]) != 5):
-                print('!!!Error in line {line_number} in tests file, unknown test type!!!')
+                print(f'!!!Error in line {line_number} in tests file, unknown test type!!!')
                 exit(0)
             
             if(tests[-1][config.SUITE]=='dieharder' and 
@@ -53,11 +53,11 @@ def test_reader(file):
                 or tests[-1][config.ID] == '202' 
                 or tests[-1][config.ID] == '203')):
                 if(len(tests[-1]) != 6):
-                    print('!!!Error in line {line_number} in tests file, parameters incomplete or unknown test!!!')
+                    print(f'!!!Error in line {line_number} in tests file, parameters incomplete or unknown test!!!')
                     exit(0)
                 
             elif(len(tests[-1]) != 5):
-                print('!!!Error in line {line_number} in tests file, parameters incomplete or unknown test!!!')
+                print(f'!!!Error in line {line_number} in tests file, parameters incomplete or unknown test!!!')
                 exit(0)
             
             tests[-1][config.SIZE] = str(eval(tests[-1][config.SIZE]))      #calculate size of the 

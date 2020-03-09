@@ -6,6 +6,7 @@ import config
 from test_reader import test_reader
 from signal import signal, SIGINT
 from sys import exit
+import subprocess
 
 
 #TODO start next module when last one running
@@ -30,7 +31,7 @@ def exit_func(signal_received, frame):
     
     
     #remove the temp directory
-    os.system(f'rm -r {config.TEMP_DEST}/')
+    os.system(f'rm -rf {config.TEMP_DEST}/')
 
 
     module_end_time = time.time()       #sevaluating module running time and storing it
@@ -101,32 +102,127 @@ def process(param, global_e, local_e, test_file, iteration):
     
     if(param[config.SUITE]=='smallcrush'):
         
-        os.system(f'mkdir -p {config.RESULT_DEST}/iteration_{iteration}/small_crush/')
-        os.system(f'Tests/testu01 -m small_crush -i {test_file} -t {param[config.ID]} > {config.RESULT_DEST}/iteration_{iteration}/small_crush/{param[config.ID]}.txt')
+        
+        subprocess.run(f'mkdir -p {config.RESULT_DEST}/iteration_{iteration}/small_crush/', shell = True)
+        out = subprocess.run(f'Tests/testu01 -m small_crush -i {test_file} -t {param[config.ID]}', stdout=subprocess.PIPE, shell = True)
+        output_list = (out.stdout.decode('utf-8')).split('\n')
+
+
+        while(output_list[-1] == '' ):
+            del output_list[-1]
+
     
+        if('All tests were passed' in output_list[-1]):
+            print(f'\nsmall_crush, {param[config.ID]}, {param[config.NAME]} Passed')
+        else:
+            print(f'\nsmall_crush, {param[config.ID]}, {param[config.NAME]} failed')
+
+
+    
+        with open(f'{config.RESULT_DEST}/iteration_{iteration}/small_crush/{param[config.ID]}.txt','w') as fw:
+            for line in output_list:
+                fw.write(line+'\n')
+    
+
     
     elif(param[config.SUITE]=='crush'):
         
-        os.system(f'mkdir -p {config.RESULT_DEST}/iteration_{iteration}/crush/')
-        os.system(f'Tests/testu01 -m crush -i {test_file} -t {param[config.ID]} > {config.RESULT_DEST}/iteration_{iteration}/crush/{param[config.ID]}.txt')
+        
+        subprocess.run(f'mkdir -p {config.RESULT_DEST}/iteration_{iteration}/crush/', shell = True)
+        out = subprocess.run(f'Tests/testu01 -m crush -i {test_file} -t {param[config.ID]}', stdout=subprocess.PIPE, shell = True)
+        output_list = (out.stdout.decode('utf-8')).split('\n')
+
+
+        while(output_list[-1] == '' ):
+            del output_list[-1]
+
+    
+        if('All tests were passed' in output_list[-1]):
+            print(f'\ncrush, {param[config.ID]}, {param[config.NAME]} Passed')
+        else:
+            print(f'\ncrush, {param[config.ID]}, {param[config.NAME]} failed')
+
+
+    
+        with open(f'{config.RESULT_DEST}/iteration_{iteration}/crush/{param[config.ID]}.txt','w') as fw:
+            for line in output_list:
+                fw.write(line+'\n')
+        
     
     
     elif(param[config.SUITE]=='bigcrush'):
         
-        os.system(f'mkdir -p {config.RESULT_DEST}/iteration_{iteration}/big_crush/')
-        os.system(f'Tests/testu01 -m big_crush -i {test_file} -t {param[config.ID]} > {config.RESULT_DEST}/iteration_{iteration}/big_crush/{param[config.ID]}.txt')
+        
+        subprocess.run(f'mkdir -p {config.RESULT_DEST}/iteration_{iteration}/big_crush/', shell = True)
+        out = subprocess.run(f'Tests/testu01 -m big_crush -i {test_file} -t {param[config.ID]}', stdout=subprocess.PIPE, shell = True)
+        output_list = (out.stdout.decode('utf-8')).split('\n')
+
+
+        while(output_list[-1] == '' ):
+            del output_list[-1]
+
+    
+        if('All tests were passed' in output_list[-1]):
+            print(f'\nbig_crush, {param[config.ID]}, {param[config.NAME]} Passed')
+        else:
+            print(f'\nbig_crush, {param[config.ID]}, {param[config.NAME]} failed')
+
+
+    
+        with open(f'{config.RESULT_DEST}/iteration_{iteration}/big_crush/{param[config.ID]}.txt','w') as fw:
+            for line in output_list:
+                fw.write(line+'\n')
+                
     
     
     elif(param[config.SUITE]=='alphabit'):
         
-        os.system(f'mkdir -p {config.RESULT_DEST}/iteration_{iteration}/alphabit/')
-        os.system(f'Tests/testu01 -m alphabit -i {test_file} -t {param[config.ID]} --bit_nb {param[config.SIZE]} > {config.RESULT_DEST}/iteration_{iteration}/alphabit/{param[config.ID]}.txt')
+        
+        subprocess.run(f'mkdir -p {config.RESULT_DEST}/iteration_{iteration}/alphabit/', shell = True)
+        out = subprocess.run(f'Tests/testu01 -m alphabit -i {test_file} -t {param[config.ID]} --bit_nb {param[config.SIZE]}', stdout=subprocess.PIPE, shell = True)
+        output_list = (out.stdout.decode('utf-8')).split('\n')
+
+
+        while(output_list[-1] == '' ):
+            del output_list[-1]
+
+    
+        if('All tests were passed' in output_list[-1]):
+            print(f'\nalphabit, {param[config.ID]}, {param[config.NAME]} Passed')
+        else:
+            print(f'\nalphabit, {param[config.ID]}, {param[config.NAME]} failed')
+
+
+    
+        with open(f'{config.RESULT_DEST}/iteration_{iteration}/alphabit/{param[config.ID]}.txt','w') as fw:
+            for line in output_list:
+                fw.write(line+'\n')
+        
     
     
     elif(param[config.SUITE]=='rabbit'):
         
-        os.system(f'mkdir -p {config.RESULT_DEST}/iteration_{iteration}/rabbit/')
-        os.system(f'Tests/testu01 -m rabbit -i {test_file} -t {param[config.ID]} --bit_nb {param[config.SIZE]} > {config.RESULT_DEST}/iteration_{iteration}/rabbit/{param[config.ID]}.txt')
+        
+        subprocess.run(f'mkdir -p {config.RESULT_DEST}/iteration_{iteration}/rabbit/', shell = True)
+        out = subprocess.run(f'Tests/testu01 -m rabbit -i {test_file} -t {param[config.ID]} --bit_nb {param[config.SIZE]}', stdout=subprocess.PIPE, shell = True)
+        output_list = (out.stdout.decode('utf-8')).split('\n')
+
+
+        while(output_list[-1] == '' ):
+            del output_list[-1]
+
+    
+        if('All tests were passed' in output_list[-1]):
+            print(f'\nrabbit, {param[config.ID]}, {param[config.NAME]} Passed')
+        else:
+            print(f'\nrabbit, {param[config.ID]}, {param[config.NAME]} failed')
+
+
+    
+        with open(f'{config.RESULT_DEST}/iteration_{iteration}/rabbit/{param[config.ID]}.txt','w') as fw:
+            for line in output_list:
+                fw.write(line+'\n')
+        
     
     
     elif(param[config.SUITE]=='dieharder' and 
@@ -135,21 +231,80 @@ def process(param, global_e, local_e, test_file, iteration):
           or param[config.ID] == '202' 
           or param[config.ID] == '203')):
         
-        os.system(f'mkdir -p {config.RESULT_DEST}/iteration_{iteration}/dieharder/')
-        os.system(f'Tests/dieharder -d {param[config.ID]} -n {param[config.N_TUPL]} -f {test_file} -g 201 > {config.RESULT_DEST}/iteration_{iteration}/dieharder/{param[config.ID]}_{param[config.N_TUPL]}.txt')
+        FLAG_DIEHARDER = 1
+        
+        subprocess.run(f'mkdir -p {config.RESULT_DEST}/iteration_{iteration}/dieharder/', shell = True)
+        out = subprocess.run(f'Tests/dieharder -d {param[config.ID]} -n {param[config.N_TUPL]} -f {test_file} -g 201', stdout=subprocess.PIPE, shell = True)
+        output_list = (out.stdout.decode('utf-8')).split('\n')
+
+
+        while(output_list[-1] == '' ):
+            del output_list[-1]
+
+        for line in output_list[8:]:
+            if('PASSED' not in line):
+                FLAG_DIEHARDER = 0
+        
+        if(FLAG_DIEHARDER == 0):
+            print(f'\ndieharder, {param[config.ID]}, {param[config.NAME]}, Tuple: {param[config.N_TUPL]} failed')
+        else:
+            print(f'\ndieharder, {param[config.ID]}, {param[config.NAME]}, Tuple: {param[config.N_TUPL]} Passed')
+    
+        
+        with open(f'{config.RESULT_DEST}/iteration_{iteration}/dieharder/{param[config.ID]}_{param[config.N_TUPL]}.txt','w') as fw:
+            for line in output_list:
+                fw.write(line+'\n')
+        
     
     
     elif(param[config.SUITE]=='dieharder'):
         
-        os.system(f'mkdir -p {config.RESULT_DEST}/iteration_{iteration}/dieharder/')
-        os.system(f'Tests/dieharder -d {param[config.ID]} -f {test_file} -g 201 > {config.RESULT_DEST}/iteration_{iteration}/dieharder/{param[config.ID]}.txt')
+        
+        FLAG_DIEHARDER = 1
+        
+        subprocess.run(f'mkdir -p {config.RESULT_DEST}/iteration_{iteration}/dieharder/', shell = True)
+        out = subprocess.run(f'Tests/dieharder -d {param[config.ID]} -f {test_file} -g 201', stdout=subprocess.PIPE, shell = True)
+        output_list = (out.stdout.decode('utf-8')).split('\n')
+
+
+        while(output_list[-1] == '' ):
+            del output_list[-1]
+
+        for line in output_list[8:]:
+            if('PASSED' not in line):
+                FLAG_DIEHARDER = 0
+        
+        if(FLAG_DIEHARDER == 0):
+            print(f'\ndieharder, {param[config.ID]}, {param[config.NAME]} failed')
+        else:
+            print(f'\ndieharder, {param[config.ID]}, {param[config.NAME]} Passed')
+    
+        
+        with open(f'{config.RESULT_DEST}/iteration_{iteration}/dieharder/{param[config.ID]}.txt','w') as fw:
+            for line in output_list:
+                fw.write(line+'\n')
+        
     
     
     elif(param[config.SUITE]=='nist'):
         
-        os.system(f'mkdir -p {config.RESULT_DEST}/iteration_{iteration}/nist/{param[config.ID]}/{param[config.NAME]}/')
-        os.system(f'Tests/nist {param[config.ID]} {test_file} {config.RESULT_DEST}/iteration_{iteration}/nist/{param[config.ID]} {param[config.SIZE]}')
-
+        FLAG_NIST = 1
+        
+        subprocess.run(f'mkdir -p {config.RESULT_DEST}/iteration_{iteration}/nist/{param[config.ID]}/{param[config.NAME]}/', shell = True)
+        out = subprocess.run(f'Tests/nist {param[config.ID]} {test_file} {config.RESULT_DEST}/iteration_{iteration}/nist/{param[config.ID]} {param[config.SIZE]}', stdout=subprocess.PIPE, shell = True)
+        output_list = (out.stdout.decode('utf-8')).split(' ')
+        while("" in output_list): 
+            output_list.remove("") 
+        
+        for element in output_list[:-1]:
+            if(int(element) < int(output_list[-1])):
+                FLAG_NIST = 0
+        
+        if(FLAG_NIST == 0):
+            print(f'\nnist, {param[config.ID]}, {param[config.NAME]} failed')
+        else:
+            print(f'\nnist, {param[config.ID]}, {param[config.NAME]} Passed')
+    
     
     
     

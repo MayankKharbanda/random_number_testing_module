@@ -13,7 +13,7 @@ N_TUPL = 5
 
 
 
-TESTS_FILE = 'config.txt'   #contains location of the configuration file.
+TESTS_FILE = 'config4.txt'   #contains location of the configuration file.
 
 #contains location of random source.
 RANDOM_SOURCE = 'dieharder203.bin'   
