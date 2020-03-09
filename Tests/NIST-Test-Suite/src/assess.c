@@ -264,6 +264,7 @@ postProcessResults(char* output_loc)
 			fprintf(summary, "random excursion (variant) test is approximately = %d for a\n", generalSampleSize ? passRate : 0);
 			fprintf(summary, "sample size = %d binary sequences.\n\n", generalSampleSize);
 		}
+		printf(" %d",passRate);
 	}
 	if ( case2 ) {
 		if ( randomExcursionSampleSize == 0 )
@@ -272,6 +273,7 @@ postProcessResults(char* output_loc)
 			passRate = (p_hat - 3.0 * sqrt((p_hat*ALPHA)/randomExcursionSampleSize)) * randomExcursionSampleSize;
 			fprintf(summary, "The minimum pass rate for the random excursion (variant) test\n");
 			fprintf(summary, "is approximately = %d for a sample size = %d binary sequences.\n\n", passRate, randomExcursionSampleSize);
+			printf(" %d",passRate);
 		}
 	}
 	fprintf(summary, "For further guidelines construct a probability table using the MAPLE program\n");
@@ -384,9 +386,15 @@ computeMetrics(char *s, int test)
 		fprintf(summary, " ------     %s\n", testNames[test]);
 	//	else if ( proportion < 0.96 )
 	else if ( (passCount < proportion_threshold_min) || (passCount > proportion_threshold_max))
+	{
 		fprintf(summary, "%4d/%-4d *  %s\n", passCount, sampleSize, testNames[test]);
+		printf("%4d", passCount);
+	}
 	else
+	{
 		fprintf(summary, "%4d/%-4d    %s\n", passCount, sampleSize, testNames[test]);
+		printf("%4d", passCount);
+	}
 	
 	fclose(fp);
 	free(A);

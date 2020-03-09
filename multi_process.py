@@ -6,10 +6,10 @@ import config
 from test_reader import test_reader
 from signal import signal, SIGINT
 from sys import exit
+from core_function import process
 
 
 #TODO start next module when last one running
-#TODO test result on print screen
 #TODO generate binary file on different core
 #TODO add param from command line
 #TODO should I remove last incomplete iteration from directory
@@ -30,7 +30,7 @@ def exit_func(signal_received, frame):
     
     
     #remove the temp directory
-    os.system(f'rm -r {config.TEMP_DEST}/')
+    os.system(f'rm -rf {config.TEMP_DEST}/')
 
 
     module_end_time = time.time()       #sevaluating module running time and storing it
@@ -67,119 +67,6 @@ with open(config.RANDOM_SOURCE,'r') as fr:
 
 
 #TODO add print statements for error
-
-
-
-
-'''
-The function runs individually for each core,
-and executes the test on the random numbers.
-'''
-
-def process(param, global_e, local_e, test_file, iteration):
-    
-    
-    '''
-    input: param: test to execute
-            global_e: global event, which is unique for all the cores.
-            local_e: local event, for every individual core.
-            test_file: binary file containing random data, on which 
-                    test is executed.
-    
-    output: results of tests at result destination.
-            Time taken to execute the test.
-    '''
-    
-    
-    process_start_time = time.time()        #contains the initial time of the test executing.
-    
-    
-    
-    '''
-    checks the suite of the test, and execute the commands accordingly.
-    '''
-    
-    if(param[config.SUITE]=='smallcrush'):
-        
-        os.system(f'mkdir -p {config.RESULT_DEST}/iteration_{iteration}/small_crush/')
-        os.system(f'Tests/testu01 -m small_crush -i {test_file} -t {param[config.ID]} > {config.RESULT_DEST}/iteration_{iteration}/small_crush/{param[config.ID]}.txt')
-    
-    
-    elif(param[config.SUITE]=='crush'):
-        
-        os.system(f'mkdir -p {config.RESULT_DEST}/iteration_{iteration}/crush/')
-        os.system(f'Tests/testu01 -m crush -i {test_file} -t {param[config.ID]} > {config.RESULT_DEST}/iteration_{iteration}/crush/{param[config.ID]}.txt')
-    
-    
-    elif(param[config.SUITE]=='bigcrush'):
-        
-        os.system(f'mkdir -p {config.RESULT_DEST}/iteration_{iteration}/big_crush/')
-        os.system(f'Tests/testu01 -m big_crush -i {test_file} -t {param[config.ID]} > {config.RESULT_DEST}/iteration_{iteration}/big_crush/{param[config.ID]}.txt')
-    
-    
-    elif(param[config.SUITE]=='alphabit'):
-        
-        os.system(f'mkdir -p {config.RESULT_DEST}/iteration_{iteration}/alphabit/')
-        os.system(f'Tests/testu01 -m alphabit -i {test_file} -t {param[config.ID]} --bit_nb {param[config.SIZE]} > {config.RESULT_DEST}/iteration_{iteration}/alphabit/{param[config.ID]}.txt')
-    
-    
-    elif(param[config.SUITE]=='rabbit'):
-        
-        os.system(f'mkdir -p {config.RESULT_DEST}/iteration_{iteration}/rabbit/')
-        os.system(f'Tests/testu01 -m rabbit -i {test_file} -t {param[config.ID]} --bit_nb {param[config.SIZE]} > {config.RESULT_DEST}/iteration_{iteration}/rabbit/{param[config.ID]}.txt')
-    
-    
-    elif(param[config.SUITE]=='dieharder' and 
-         (param[config.ID] == '200' 
-          or param[config.ID] == '201' 
-          or param[config.ID] == '202' 
-          or param[config.ID] == '203')):
-        
-        os.system(f'mkdir -p {config.RESULT_DEST}/iteration_{iteration}/dieharder/')
-        os.system(f'Tests/dieharder -d {param[config.ID]} -n {param[config.N_TUPL]} -f {test_file} -g 201 > {config.RESULT_DEST}/iteration_{iteration}/dieharder/{param[config.ID]}_{param[config.N_TUPL]}.txt')
-    
-    
-    elif(param[config.SUITE]=='dieharder'):
-        
-        os.system(f'mkdir -p {config.RESULT_DEST}/iteration_{iteration}/dieharder/')
-        os.system(f'Tests/dieharder -d {param[config.ID]} -f {test_file} -g 201 > {config.RESULT_DEST}/iteration_{iteration}/dieharder/{param[config.ID]}.txt')
-    
-    
-    elif(param[config.SUITE]=='nist'):
-        
-        os.system(f'mkdir -p {config.RESULT_DEST}/iteration_{iteration}/nist/{param[config.ID]}/{param[config.NAME]}/')
-        os.system(f'Tests/nist {param[config.ID]} {test_file} {config.RESULT_DEST}/iteration_{iteration}/nist/{param[config.ID]} {param[config.SIZE]}')
-
-    
-    
-    
-    os.system(f'rm {test_file}')    #remove the random file created for the test.
-    
-    process_end_time = time.time()  #contains end time of the test.
-    
-
-
-    process_time = process_end_time - process_start_time    #time to execute the test.
-    
-    if(param[config.SUITE]=='dieharder' and 
-         (param[config.ID] == '200' 
-          or param[config.ID] == '201' 
-          or param[config.ID] == '202' 
-          or param[config.ID] == '203')):
-        
-        with open(f'{config.RESULT_DEST}/iteration_{iteration}/{param[config.SUITE]}_{param[config.ID]}_{param[config.N_TUPL]}_time.txt','w') as fw:
-            fw.write(str(process_time))
-    
-    else:
-        
-        with open(f'{config.RESULT_DEST}/iteration_{iteration}/{param[config.SUITE]}_{param[config.ID]}_time.txt','w') as fw:
-            fw.write(str(process_time))
-    
-    
-    
-    local_e.set()
-    global_e.set()    #setting events
-
 
 
 
