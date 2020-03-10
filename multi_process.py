@@ -6,8 +6,9 @@ import config
 from test_reader import test_reader
 from signal import signal, SIGINT
 from sys import exit
+import subprocess
 from core_function import process
-
+from random_file_gen import inorder_file_gen
 
 #TODO start next module when last one running
 #TODO generate binary file on different core
@@ -97,6 +98,7 @@ process_event_global.set()
 #variable for each core running
 process_arr = [None]*config.CORES
 
+random_file_gen_process = None
 
 signal(SIGINT, exit_func)
 
@@ -215,7 +217,14 @@ while(True):        #infinite loop over tests_file
 
 
     else:
-    
+        
+        inorder_file_event = multiprocessing.Event()
+        inorder_file_event.clear()
+        
+        random_file_gen_process = multiprocessing.Process(target=inorder_file_gen, args=(Tests, inorder_file_event))
+        random_file_gen_process.start()
+        
+        
         while tests_completed < total_tests_all:
         
         
@@ -238,36 +247,33 @@ while(True):        #infinite loop over tests_file
         
                 if(process_event[i].is_set() and tests_completed < total_tests_all):
                 
-                
-                    #checking for some special tests in dieharder which are different 
-                    #in ntuples only and allocating test file name accordingly
                     if(Tests[tests_completed][config.SUITE] == 'dieharder' and 
                        (Tests[tests_completed][config.ID] == '200' 
                         or Tests[tests_completed][config.ID] == '201' 
                         or Tests[tests_completed][config.ID] == '202' 
                         or Tests[tests_completed][config.ID] == '203')):
-                    
-                    
+            
+            
                         test_file = f'{config.TEMP_DEST}/{Tests[tests_completed][config.SUITE]}_{Tests[tests_completed][config.ID]}_{Tests[tests_completed][config.N_TUPL]}.bin'
-                
+            
                     else:
-                    
+                
                         test_file = f'{config.TEMP_DEST}/{Tests[tests_completed][config.SUITE]}_{Tests[tests_completed][config.ID]}.bin'
-                
-                
-                    #random bin file creation for the test
-                    with open(config.RANDOM_SOURCE,'rb') as rf, open(test_file,'wb') as wf:
                     
-                        file_size = min(int(Tests[tests_completed][config.SIZE]), config.MAX_FILE_SIZE)
                     
-                        if(file_seek + file_size > SOURCE_FILE_SIZE):
-                            file_seek = 0
                     
-                        rf.seek(file_seek, 0)
-                        wf.write(rf.read(file_size))
-                        file_seek = file_seek + file_size
-                
-                
+                    FILE_EXIST = 'False'
+                    
+                    while( 'True' not in FILE_EXIST ):
+                        
+                        out = subprocess.run(f'test -e {test_file} && echo True || echo False ', stdout=subprocess.PIPE, shell = True)
+                        FILE_EXIST = out.stdout.decode('utf-8')
+            
+                        if('True' not in FILE_EXIST):
+                            inorder_file_event.wait()
+                            inorder_file_event.clear()
+
+                    
                     print(f'Running test {Tests[tests_completed][config.NAME]} in core {i}, iteration {iteration_over_tests}')
                 
                 
