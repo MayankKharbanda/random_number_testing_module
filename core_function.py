@@ -10,7 +10,7 @@ and executes the test on the random numbers.
 '''
 
 
-def process(param, global_e, local_e, test_file, iteration):
+def process(param, global_e, local_e, test_file, iteration, process_start_time, core_no):
     
     
     '''
@@ -24,11 +24,7 @@ def process(param, global_e, local_e, test_file, iteration):
     output: results of tests at result destination.
             Time taken to execute the test.
     '''
-    
-    
-    process_start_time = time.time()        #contains the initial time of the test executing.
-    
-    
+      
     
     '''
     checks the suite of the test, and execute the commands accordingly.
@@ -41,9 +37,9 @@ def process(param, global_e, local_e, test_file, iteration):
         
         subprocess.run(f'mkdir -p {config.RESULT_DEST}/iteration_{iteration}/small_crush/', shell = True)
         
-        out = subprocess.run(f'Tests/testu01 -m small_crush -i {test_file} -t {param[config.ID]}', stdout=subprocess.PIPE, shell = True)
+        out = subprocess.run(f'Tests/testu01 -m small_crush -i {test_file} -t {param[config.ID]}', stderr=subprocess.STDOUT, stdout=subprocess.PIPE, shell = True)
         output_list = (out.stdout.decode('utf-8')).split('\n')
-
+        
 
         while(output_list[-1] == '' ):  #clean output
             del output_list[-1]
@@ -51,9 +47,9 @@ def process(param, global_e, local_e, test_file, iteration):
     
         
         if('All tests were passed' in output_list[-1]):
-            print(f'\nsmall_crush, {param[config.ID]}, {param[config.NAME]} Passed')
+            print(f'\nsmall_crush, {param[config.ID]}, {param[config.NAME]} Passed, iteration_{iteration}, core {core_no}')
         else:
-            print(f'\nsmall_crush, {param[config.ID]}, {param[config.NAME]} failed')
+            print(f'\n!!!!ALERT small_crush, {param[config.ID]}, {param[config.NAME]} failed, iteration_{iteration}, core {core_no}')
 
 
         
