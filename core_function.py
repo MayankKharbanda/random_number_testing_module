@@ -10,7 +10,7 @@ and executes the test on the random numbers.
 '''
 
 
-def process(param, global_e, local_e, test_file, iteration):
+def process(param, global_e, local_e, test_file, iteration, process_start_time, core_no):
     
     
     '''
@@ -20,15 +20,13 @@ def process(param, global_e, local_e, test_file, iteration):
             test_file: binary file containing random data, on which 
                     test is executed.
             iteration: iteration value over test file.
+            process_start_time: start time of this test.
+            core_no: the core on which the test is running.
     
     output: results of tests at result destination.
             Time taken to execute the test.
     '''
-    
-    
-    process_start_time = time.time()        #contains the initial time of the test executing.
-    
-    
+      
     
     '''
     checks the suite of the test, and execute the commands accordingly.
@@ -41,9 +39,9 @@ def process(param, global_e, local_e, test_file, iteration):
         
         subprocess.run(f'mkdir -p {config.RESULT_DEST}/iteration_{iteration}/small_crush/', shell = True)
         
-        out = subprocess.run(f'Tests/testu01 -m small_crush -i {test_file} -t {param[config.ID]}', stdout=subprocess.PIPE, shell = True)
+        out = subprocess.run(f'Tests/testu01 -m small_crush -i {test_file} -t {param[config.ID]}', stderr=subprocess.STDOUT, stdout=subprocess.PIPE, shell = True)
         output_list = (out.stdout.decode('utf-8')).split('\n')
-
+        
 
         while(output_list[-1] == '' ):  #clean output
             del output_list[-1]
@@ -51,9 +49,9 @@ def process(param, global_e, local_e, test_file, iteration):
     
         
         if('All tests were passed' in output_list[-1]):
-            print(f'\nsmall_crush, {param[config.ID]}, {param[config.NAME]} Passed')
+            print(f'\nsmall_crush, {param[config.ID]}, {param[config.NAME]}, iteration_{iteration}, core {core_no}, Passed')
         else:
-            print(f'\nsmall_crush, {param[config.ID]}, {param[config.NAME]} failed')
+            print(f'\n!!! ALERT small_crush, {param[config.ID]}, {param[config.NAME]}, iteration_{iteration}, core {core_no}, Failed !!!')
 
 
         
@@ -80,9 +78,9 @@ def process(param, global_e, local_e, test_file, iteration):
 
     
         if('All tests were passed' in output_list[-1]):
-            print(f'\ncrush, {param[config.ID]}, {param[config.NAME]} Passed')
+            print(f'\ncrush, {param[config.ID]}, {param[config.NAME]}, iteration_{iteration}, core {core_no}, Passed')
         else:
-            print(f'\ncrush, {param[config.ID]}, {param[config.NAME]} failed')
+            print(f'\n!!! ALERT crush, {param[config.ID]}, {param[config.NAME]}, iteration_{iteration}, core {core_no}, Failed !!!')
 
 
         #writing output to result file
@@ -107,9 +105,9 @@ def process(param, global_e, local_e, test_file, iteration):
 
     
         if('All tests were passed' in output_list[-1]):
-            print(f'\nbig_crush, {param[config.ID]}, {param[config.NAME]} Passed')
+            print(f'\nbig_crush, {param[config.ID]}, {param[config.NAME]}, iteration_{iteration}, core {core_no}, Passed')
         else:
-            print(f'\nbig_crush, {param[config.ID]}, {param[config.NAME]} failed')
+            print(f'\n!!! ALERT big_crush, {param[config.ID]}, {param[config.NAME]}, iteration_{iteration}, core {core_no}, Failed !!!')
 
 
         #writing output to result file
@@ -134,9 +132,9 @@ def process(param, global_e, local_e, test_file, iteration):
 
     
         if('All tests were passed' in output_list[-1]):
-            print(f'\nalphabit, {param[config.ID]}, {param[config.NAME]} Passed')
+            print(f'\nalphabit, {param[config.ID]}, {param[config.NAME]}, iteration_{iteration}, core {core_no}, Passed')
         else:
-            print(f'\nalphabit, {param[config.ID]}, {param[config.NAME]} failed')
+            print(f'\n!!! ALERT alphabit, {param[config.ID]}, {param[config.NAME]}, iteration_{iteration}, core {core_no}, Failed !!!')
 
 
         #writing output to result file
@@ -161,9 +159,9 @@ def process(param, global_e, local_e, test_file, iteration):
 
     
         if('All tests were passed' in output_list[-1]):
-            print(f'\nrabbit, {param[config.ID]}, {param[config.NAME]} Passed')
+            print(f'\nrabbit, {param[config.ID]}, {param[config.NAME]}, iteration_{iteration}, core {core_no}, Passed')
         else:
-            print(f'\nrabbit, {param[config.ID]}, {param[config.NAME]} failed')
+            print(f'\n!!! ALERT rabbit, {param[config.ID]}, {param[config.NAME]}, iteration_{iteration}, core {core_no}, Failed !!!')
 
 
         #writing output to result file
@@ -197,9 +195,9 @@ def process(param, global_e, local_e, test_file, iteration):
         
         
         if(FLAG_DIEHARDER == 0):
-            print(f'\ndieharder, {param[config.ID]}, {param[config.NAME]}, Tuple: {param[config.N_TUPL]} failed')
+            print(f'\n!!! ALERT dieharder, {param[config.ID]}, {param[config.NAME]}, Tuple: {param[config.N_TUPL]}, iteration_{iteration}, core {core_no}, Failed !!!')
         else:
-            print(f'\ndieharder, {param[config.ID]}, {param[config.NAME]}, Tuple: {param[config.N_TUPL]} Passed')
+            print(f'\ndieharder, {param[config.ID]}, {param[config.NAME]}, Tuple: {param[config.N_TUPL]}, iteration_{iteration}, core {core_no}, Passed')
     
         
         #writing output to result file
@@ -232,9 +230,9 @@ def process(param, global_e, local_e, test_file, iteration):
         
         
         if(FLAG_DIEHARDER == 0):
-            print(f'\ndieharder, {param[config.ID]}, {param[config.NAME]} failed')
+            print(f'\n!!! ALERT dieharder, {param[config.ID]}, {param[config.NAME]}, iteration_{iteration}, core {core_no}, Failed !!!')
         else:
-            print(f'\ndieharder, {param[config.ID]}, {param[config.NAME]} Passed')
+            print(f'\ndieharder, {param[config.ID]}, {param[config.NAME]}, iteration_{iteration}, core {core_no}, Passed')
     
         
         #writing output to result file
@@ -266,11 +264,13 @@ def process(param, global_e, local_e, test_file, iteration):
         
         
         if(FLAG_NIST == 0):
-            print(f'\nnist, {param[config.ID]}, {param[config.NAME]} failed')
+            print(f'\n!!! ALERT nist, {param[config.ID]}, {param[config.NAME]}, iteration_{iteration}, core {core_no}, Failed !!!')
         else:
-            print(f'\nnist, {param[config.ID]}, {param[config.NAME]} Passed')
+            print(f'\nnist, {param[config.ID]}, {param[config.NAME]}, iteration_{iteration}, core {core_no}, Passed')
     
-    
+    else:
+        print('!!!INVALID TEST NOTICED!!!')
+        return
     
     
     os.system(f'rm {test_file}')    #remove the random file created for the test.
