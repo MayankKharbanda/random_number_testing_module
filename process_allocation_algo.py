@@ -1,13 +1,12 @@
 import config
-
+from sys import exit
     
 '''
 This function allocates nearly equally time consuming tests to each of the 
-cores, in the motivation to minimize the wait time of random number generator
-between the running of tests.
+cores, in the motivation to minimize the wait time of main module between tests.
 '''
 
-def process_alloc(cores, Tests):
+def process_alloc(Tests):
     
     
     '''
@@ -30,27 +29,25 @@ def process_alloc(cores, Tests):
             return -1
                 
 
-    
-    
-    process_list = []       #final list of tests on each processes
+    process_list = []       #list of, list of tests on processes
 
-
-    
     #Copy test list so that original list doesn't get affected
     tests_copy = Tests.copy()
 
 
 
     #create process list for each core.
-    for _ in range(cores):
+    for _ in range(config.CORES):
         process_list.append([])
 
 
+    try:
+        #sorting list wrt time to execute
+        tests_copy.sort(key = lambda x:float(x[config.TIME]))
+    except:
+        print(f'!!! Error test time could not be evaluated. !!!')
+        exit()
     
-    #sorting list wrt time to execute
-    tests_copy.sort(key = lambda x:float(x[config.TIME]))
-
-
     
     total_time = 0     #summation of wait time of all the processors
 
@@ -59,20 +56,20 @@ def process_alloc(cores, Tests):
     
     #Total time required to execute x-n tests, where x is total number 
     #of tests, and n is the number of cores in the list.
-    if(len(tests_copy)>cores):
-        total_time = sum(float(test[config.TIME]) for test in tests_copy[:-cores])
+    if(len(tests_copy)>config.CORES):
+        total_time = sum(float(test[config.TIME]) for test in tests_copy[:-config.CORES])
 
 
     
     
     #wait time for each processor/time taken to start last test on the process
-    approx_time_each_process = total_time/cores
+    approx_time_each_process = total_time/config.CORES
 
 
     
     
     #adding slowest tests to each core list
-    for i in range(cores):
+    for i in range(config.CORES):
         if(len(tests_copy)>0):
             process_list[-(i+1)].insert(0, tests_copy[-1])
             del tests_copy[-1]
@@ -84,21 +81,39 @@ def process_alloc(cores, Tests):
 
     #adding tests to all the core tests lists except the first one
     #in greedy algorithm.
-    for i in range(cores-1):
-        if(len(tests_copy)>0):
-            temp_sum = float(tests_copy[-1][config.TIME])
+    for i in range(config.CORES-1):
+        
+        if(len(tests_copy) == 0):
+            break
+        
+        temp_sum = float(tests_copy[-1][config.TIME])   #first try to add long tests in the list
+        process_list[-(i+1)].insert(0, tests_copy[-1])
+        del tests_copy[-1]
+        
+        if(len(tests_copy) == 0):
+            break
+        
+        while((temp_sum + float(tests_copy[-1][config.TIME])) <= approx_time_each_process):     #first try to add long tests in the list
+            temp_sum = temp_sum + float(tests_copy[-1][config.TIME])
             process_list[-(i+1)].insert(0, tests_copy[-1])
             del tests_copy[-1]
-            if(len(tests_copy)>0):
-                temp_sum = temp_sum+float(tests_copy[0][config.TIME])
-                j = 0
-                while(temp_sum < approx_time_each_process):
-                    process_list[-(i+1)].insert(j, tests_copy[0])
-                    del tests_copy[0]
-                    j = j+1
-                    if(len(tests_copy) == 0):
-                        break
-                    temp_sum = temp_sum+float(tests_copy[0][config.TIME])
+            if(len(tests_copy) == 0):
+                break
+        
+        if(len(tests_copy) == 0):
+            break
+        
+        temp_sum = temp_sum+float(tests_copy[0][config.TIME])
+        j = 0
+        
+        while(temp_sum < approx_time_each_process):     #add small tests in the list
+            process_list[-(i+1)].insert(j, tests_copy[0])
+            del tests_copy[0]
+            j = j+1
+            if(len(tests_copy) == 0):
+                break
+            temp_sum = temp_sum+float(tests_copy[0][config.TIME])
+
 
 
     #adding all left over tests to the first core

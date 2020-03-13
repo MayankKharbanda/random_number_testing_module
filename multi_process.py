@@ -5,14 +5,14 @@ from process_allocation_algo import process_alloc
 import config
 from test_reader import test_reader
 from signal import signal, SIGINT
-from sys import exit
+import sys
 import subprocess
 from core_function import process
 from random_file_gen import inorder_random_file_gen, random_file_gen_time
 from file_gen import File_gen
 
+sys.tracebacklimit=0
 
-#TODO start next module when last one running
 #TODO add param from command line
 #TODO should I remove last incomplete iteration from directory
 
@@ -44,7 +44,7 @@ def exit_func(signal_received, frame):
     print('EXITING...')
     
     
-    exit(0)
+    sys.exit(0)
 
 
 
@@ -54,69 +54,53 @@ file_gen_queue = multiprocessing.Queue()    #queue used to know the current proc
 #contains start time of running of the whole module
 module_start_time = time.time()
 
-Tests = test_reader(config.TESTS_FILE)    #contains the list of all the 
-                                            #tests to run on random number generator.
-
-file_seek = 0   #contains location in the random source from 
-                #where the numbers are taken. 
-
-with open(config.RANDOM_SOURCE,'r') as fr:
-    fr.seek(0,2)
-    SOURCE_FILE_SIZE = fr.tell()    #contains the size of the file in bytes
+Tests = test_reader()    #contains the list of all the 
+                        #tests to run on random number generator.
 
 
-
-#TODO add print statements for error
-
-os.system(f'mkdir -p {config.TEMP_DEST}/')  #directory creation for random files
+os.system(f'mkdir -p {config.TEMP_DEST}/')  #directory for random files
 
 
-#summation of tests in all cores
+#Total tests in test file
 total_tests_all = len(Tests)
 
 
-#events for, each process, if completed execution or not
+#events for each process to check it's status
 process_event = []
 for i in range(config.CORES):
     process_event.append(multiprocessing.Event())
     process_event[i].set()
 
 
-#global event 
+#global event
 process_event_global = multiprocessing.Event()
 process_event_global.set()
 
 
 
 
-#variable for each core running
+#variable for each process running
 process_arr = [None]*config.CORES
-
-
 random_file_gen_process = None  #contains the process to generate file on a different core
-
-
-signal(SIGINT, exit_func)   #initialization of signal to handle closing of module
-
-
 iteration_over_tests = 0    #contains count of iteration over the test file
 
+signal(SIGINT, exit_func)   #initialization of signal to handle exit from module
 
-while(True):        #infinite loop over tests file
+
+while(True):        #infinite loop over test-file
 
     
     iteration_over_tests = iteration_over_tests + 1
     
     
     tests_completed = 0    #total tests completed till this moment.
-    total_wait_time = 0     #total wait time for random number generator.
-
+    total_wait_time = 0     #total wait time for the main module.
 
 
 
     #array contaning n-lists of tests, each for a particular core according 
     #to time to execute.
-    process_list = process_alloc(config.CORES, Tests)
+    process_list = process_alloc(Tests)
 
 
 
@@ -124,25 +108,25 @@ while(True):        #infinite loop over tests file
     #check if test execution time is there.
     if(process_list!=-1):
     
-        time_file_event = multiprocessing.Event()
+        time_file_event = multiprocessing.Event()   #event to wakeup after generation of a file
         time_file_event.clear()
         
         #array of number of tests in a particular core
-        total_tests_each_p = []
+        total_tests_arr = []
 
 
         for i in range(config.CORES):
-            total_tests_each_p.append(len(process_list[i]))
+            total_tests_arr.append(len(process_list[i]))
 
 
-        random_file_gen_process = multiprocessing.Process(target=random_file_gen_time, args=(process_list, file_gen_queue, total_tests_each_p, time_file_event))
-        random_file_gen_process.start()        #start the process to generate file
+        random_file_gen_process = multiprocessing.Process(target=random_file_gen_time, args=(process_list, file_gen_queue, total_tests_arr, time_file_event))
+        random_file_gen_process.start()        #start the process to generate random number file
         
     
-        #contains the number of tests completed in a core
-        test_process = []
+        #contains the number of tests allocated on a core
+        process_comleted_arr = []
         for i in range(config.CORES):
-            test_process.append(0)
+            process_comleted_arr.append(0)
     
 
         while tests_completed < total_tests_all:
@@ -163,30 +147,31 @@ while(True):        #infinite loop over tests file
     
     
         
-            #checking each core to find which core generated event.
+            #checking each core to find which generated event.
             for i in range(config.CORES):
         
-                if(process_event[i].is_set() and test_process[i] < total_tests_each_p[i]):
+                if(process_event[i].is_set() and process_comleted_arr[i] < total_tests_arr[i]):
                 
                     #resetting local event
                     process_event[i].clear()
                     
                     #checking for some special tests in dieharder which are different 
                     #in ntuples only and allocating test file name accordingly
-                    if(process_list[i][test_process[i]][config.SUITE] == 'dieharder' and 
-                       (process_list[i][test_process[i]][config.ID] == '200' 
-                        or process_list[i][test_process[i]][config.ID] == '201' 
-                        or process_list[i][test_process[i]][config.ID] == '202' 
-                        or process_list[i][test_process[i]][config.ID] == '203')):
+                    if(process_list[i][process_comleted_arr[i]][config.SUITE] == 'dieharder' and 
+                       (process_list[i][process_comleted_arr[i]][config.ID] == '200' 
+                        or process_list[i][process_comleted_arr[i]][config.ID] == '201' 
+                        or process_list[i][process_comleted_arr[i]][config.ID] == '202' 
+                        or process_list[i][process_comleted_arr[i]][config.ID] == '203')):
                     
                     
-                        test_file = f'{config.TEMP_DEST}/{process_list[i][test_process[i]][config.SUITE]}_{process_list[i][test_process[i]][config.ID]}_{process_list[i][test_process[i]][config.N_TUPL]}.bin'
+                        test_file = f'{config.TEMP_DEST}/{process_list[i][process_comleted_arr[i]][config.SUITE]}_{process_list[i][process_comleted_arr[i]][config.ID]}_{process_list[i][process_comleted_arr[i]][config.N_TUPL]}.bin'
                 
                     else:
                     
-                        test_file = f'{config.TEMP_DEST}/{process_list[i][test_process[i]][config.SUITE]}_{process_list[i][test_process[i]][config.ID]}.bin'
+                        test_file = f'{config.TEMP_DEST}/{process_list[i][process_comleted_arr[i]][config.SUITE]}_{process_list[i][process_comleted_arr[i]][config.ID]}.bin'
                 
                     
+                    #waiting for required file
                     FILE_EXIST = 'False'
                     
                     while( 'True' not in FILE_EXIST ):
@@ -200,22 +185,24 @@ while(True):        #infinite loop over tests file
 
                     
                     
-                    process_start_time = time.time()        #contains the initial time of the test executing.
+                    process_start_time = time.time()        #contains the start time of the test executing.
                     
-                    file_gen_queue.put(File_gen(start_time=process_start_time,
-                                                core=i, test_number=test_process[i]))
-                    
+                                        
                     #print(f'Running test {process_list[i][test_process[i]][config.NAME]} in core {i}, iteration {iteration_over_tests}')
                     
-                    #allocation of test to the core
-                    process_arr[i] = multiprocessing.Process(target=process, args=(process_list[i][test_process[i]], process_event_global, process_event[i], test_file, iteration_over_tests, process_start_time, i))
+                    #starting the process
+                    process_arr[i] = multiprocessing.Process(target=process, args=(process_list[i][process_comleted_arr[i]], process_event_global, process_event[i], test_file, iteration_over_tests, process_start_time, i))
                     process_arr[i].start()
-                
-                
-                    test_process[i] = test_process[i] + 1
+                    
+                    #putting the info that which test is running on a core, for deciding the target test to generate file
+                    file_gen_queue.put(File_gen(start_time=process_start_time,
+                                                core=i, test_number=process_comleted_arr[i]))
+                    
+                    
+                    process_comleted_arr[i] = process_comleted_arr[i] + 1
                     tests_completed = tests_completed + 1
         
-        while(file_gen_queue.empty() is False):
+        while(file_gen_queue.empty() is False):     #Cleaning the queue after the iteration
             file_gen_queue.get()
                 
             
@@ -224,11 +211,11 @@ while(True):        #infinite loop over tests file
 
     else:
         
-        inorder_file_event = multiprocessing.Event()
+        inorder_file_event = multiprocessing.Event()    #event to wakeup after generation of a file
         inorder_file_event.clear()
         
         random_file_gen_process = multiprocessing.Process(target=inorder_random_file_gen, args=(Tests, inorder_file_event))
-        random_file_gen_process.start()
+        random_file_gen_process.start()     #start the process to generate random number file
         
         
         while tests_completed < total_tests_all:
@@ -248,7 +235,7 @@ while(True):        #infinite loop over tests file
     
     
         
-            #checking each core to find which core generated event.
+            #checking each core to find which generated event.
             for i in range(config.CORES):
         
                 if(process_event[i].is_set() and tests_completed < total_tests_all):
@@ -256,6 +243,8 @@ while(True):        #infinite loop over tests file
                     #resetting local event
                     process_event[i].clear()
                     
+                    #checking for some special tests in dieharder which are different 
+                    #in ntuples only and allocating test file name accordingly
                     if(Tests[tests_completed][config.SUITE] == 'dieharder' and 
                        (Tests[tests_completed][config.ID] == '200' 
                         or Tests[tests_completed][config.ID] == '201' 
@@ -270,7 +259,7 @@ while(True):        #infinite loop over tests file
                         test_file = f'{config.TEMP_DEST}/{Tests[tests_completed][config.SUITE]}_{Tests[tests_completed][config.ID]}.bin'
                     
                     
-                    
+                    #waiting for required file
                     FILE_EXIST = 'False'
                     
                     while( 'True' not in FILE_EXIST ):
@@ -283,12 +272,12 @@ while(True):        #infinite loop over tests file
                             inorder_file_event.clear()
 
                     
-                    process_start_time = time.time()        #contains the initial time of the test executing.
+                    process_start_time = time.time()        #contains the start time of the test executing.
 
                     #print(f'Running test {Tests[tests_completed][config.NAME]} in core {i}, iteration {iteration_over_tests}')
                 
                 
-                    #allocation of test to the core
+                    #starting the process
                     process_arr[i] = multiprocessing.Process(target=process, args=(Tests[tests_completed], process_event_global, process_event[i], test_file, iteration_over_tests, process_start_time, i))
                     process_arr[i].start()
                 
@@ -300,7 +289,7 @@ while(True):        #infinite loop over tests file
 
 
 
-    #waiting for each core to complete execution, after running all tests
+    #waiting for each core to complete execution
     for i in range(config.CORES):
         process_event[i].wait()
 
@@ -315,7 +304,8 @@ while(True):        #infinite loop over tests file
             or Test[config.ID] == '201' 
             or Test[config.ID] == '202' 
             or Test[config.ID] == '203')):
-        
+            
+            
             with open(f'{config.RESULT_DEST}/iteration_{iteration_over_tests}/{Test[config.SUITE]}_{Test[config.ID]}_{Test[config.N_TUPL]}_time.txt','w') as fr:
                 Test[config.TIME] = str(round(float((fr.readline()).strip()),2))
             os.system(f'rm {config.RESULT_DEST}/iteration_{iteration_over_tests}/{Test[config.SUITE]}_{Test[config.ID]}_{Test[config.N_TUPL]}_time.txt')
