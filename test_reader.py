@@ -38,15 +38,19 @@ def test_reader():
                     if(line_data[i].startswith('#')):   #handling inline comments
                        FLAG=1
                        break
-            
+
                 if(FLAG == 0):      #handling inline comments
+                    if(line_data[0:i+1] == [] or line_data[:] == ['']):
+                        continue
                     tests.append(line_data[0:i+1])
                 else:
+                    if(line_data[0:i] == [] or line_data[:] == ['']):
+                        continue
                     tests.append(line_data[0:i])
             
                 
                 if(len(tests[-1]) != 6 and len(tests[-1]) != 5):
-                    print(f'!!! Error in line {line_number} in tests file, Number of arguments does not match. !!!')    #checking for enough arguments
+                    print(f'!!! Error in line {line_number+1} in tests file, Number of arguments does not match. !!!')    #checking for enough arguments
                     exit(0)
             
                 if(tests[-1][config.SUITE]=='dieharder' and 
@@ -55,17 +59,17 @@ def test_reader():
                     or tests[-1][config.ID] == '202' 
                     or tests[-1][config.ID] == '203')):
                     if(len(tests[-1]) != 6):
-                        print(f'!!! Error in line {line_number} in tests file, Number of arguments does not match. !!!')
+                        print(f'!!! Error in line {line_number+1} in tests file, Number of arguments does not match. !!!')
                         exit(0)
                 
                 elif(len(tests[-1]) != 5):
-                    print(f'!!! Error in line {line_number} in tests file, Number of arguments does not match. !!!')
+                    print(f'!!! Error in line {line_number+1} in tests file, Number of arguments does not match. !!!')
                     exit(0)
                 try:    
                     #calculate size of the file required, if it is an expression.
                     tests[-1][config.SIZE] = str(eval(tests[-1][config.SIZE]))
                 except:
-                    print(f'!!! Error in file size in line number {line_number}, file size could not be evaluated. !!!')
+                    print(f'!!! Error in file size in line number {line_number+1}, file size could not be evaluated. !!!')
                     exit()
     except FileNotFoundError:       #handling exception, if test file is not found.
         print(f'!!! ERROR: Test file at --{config.TESTS_FILE}-- is not available. !!!')

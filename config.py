@@ -13,11 +13,7 @@ N_TUPL = 5
 
 
 
-TESTS_FILE = 'config4.txt'   #contains location of the test file.
-
-#contains location of random source file.
-RANDOM_SOURCE = 'dieharder203.bin'   
-
+TESTS_FILE = 'config.txt'   #contains location of the test file.
 
 #contains location where results are to be stored
 RESULT_DEST = 'results_parallel_process'

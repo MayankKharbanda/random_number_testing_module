@@ -1,16 +1,11 @@
 import config
 import os
 import time
+from generator import generator_method
+from sys import exit
 
 def inorder_random_file_gen(Tests, inorder_file_event):
     
-    file_seek = 0   #contains location in the random source from 
-                #where the numbers are taken. 
-
-    with open(config.RANDOM_SOURCE,'r') as fr:
-        fr.seek(0,2)
-        SOURCE_FILE_SIZE = fr.tell()    
-
     temp_random_file = f'{config.TEMP_DEST}/temp_random.bin'
     
     for test in Tests:
@@ -30,31 +25,19 @@ def inorder_random_file_gen(Tests, inorder_file_event):
                 
             test_file = f'{config.TEMP_DEST}/{test[config.SUITE]}_{test[config.ID]}.bin'
                 
-                
-        #bin file creation for the test
-        with open(config.RANDOM_SOURCE,'rb') as rf, open(temp_random_file,'wb') as wf:
-            
-            file_size = min(int(test[config.SIZE]), config.MAX_FILE_SIZE)
-                    
-            if(file_seek + file_size > SOURCE_FILE_SIZE):
-                file_seek = 0
-                    
-            rf.seek(file_seek, 0)
-            wf.write(rf.read(file_size))
-            file_seek = file_seek + file_size
+        file_size = min(int(test[config.SIZE]), config.MAX_FILE_SIZE)   #calculating file size to be generated
+        
+        try:
+            generator_method(temp_random_file, file_size)   #call generator to generate file
+        except:
+            print('!!!Cannot generate numbers from generator function!!!')
+            exit(0)
             
         os.system(f'mv {temp_random_file} {test_file}')
         inorder_file_event.set()
 
 
 def random_file_gen_time(process_list, file_gen_queue, total_tests_arr, time_file_event):
-    
-    file_seek = 0   #contains location in the random source from 
-                #where the numbers are taken. 
-
-    with open(config.RANDOM_SOURCE,'r') as fr:
-        fr.seek(0,2)
-        SOURCE_FILE_SIZE = fr.tell()
     
     total_tests = sum(total_tests_arr)
     
@@ -67,7 +50,7 @@ def random_file_gen_time(process_list, file_gen_queue, total_tests_arr, time_fil
     for i in range(config.CORES):
         last_file_gen_arr.append(-1)
         
-    while(sum(last_file_gen_arr+1) < total_tests):      #+1 for array starts from 0
+    while((sum(last_file_gen_arr)+config.CORES) < total_tests):      #+1 for array starts from 0
         
         
         while(file_gen_queue.empty() is False):     #getting the current test running on each core
@@ -111,18 +94,15 @@ def random_file_gen_time(process_list, file_gen_queue, total_tests_arr, time_fil
                 
             test_file = f'{config.TEMP_DEST}/{process_list[earliest_complete][last_file_gen_arr[earliest_complete]+1][config.SUITE]}_{process_list[earliest_complete][last_file_gen_arr[earliest_complete]+1][config.ID]}.bin'
     
-        #random bin file creation for the test
-        with open(config.RANDOM_SOURCE,'rb') as rf, open(temp_random_file,'wb') as wf:
-                    
-            file_size = min(int(process_list[earliest_complete][last_file_gen_arr[earliest_complete]+1][config.SIZE]), config.MAX_FILE_SIZE)
-            
-            if(file_seek + file_size > SOURCE_FILE_SIZE):
-                file_seek = 0
-                    
-            rf.seek(file_seek, 0)
-            wf.write(rf.read(file_size))
-            file_seek = file_seek + file_size
-
+        #calculating file size to be generated
+        file_size = min(int(process_list[earliest_complete][last_file_gen_arr[earliest_complete]+1][config.SIZE]), config.MAX_FILE_SIZE)
+        
+        try:
+            generator_method(temp_random_file, file_size)   #call generator to generate file
+        except:
+            print('!!!Error in generator function!!!')
+            exit(0)
+        
         os.system(f'mv {temp_random_file} {test_file}')
         last_file_gen_arr[earliest_complete] = last_file_gen_arr[earliest_complete]+1
         

@@ -8,10 +8,10 @@ from signal import signal, SIGINT
 import sys
 import subprocess
 from core_function import process
-from random_file_gen import inorder_random_file_gen, random_file_gen_time
-from file_gen import File_gen
+from core_file_gen import inorder_random_file_gen, random_file_gen_time
+from file_gen_class import File_gen
 
-sys.tracebacklimit=0
+sys.tracebacklimit=10
 
 #TODO add param from command line
 #TODO should I remove last incomplete iteration from directory
@@ -192,8 +192,13 @@ while(True):        #infinite loop over test-file
                     
                     #starting the process
                     process_arr[i] = multiprocessing.Process(target=process, args=(process_list[i][process_comleted_arr[i]], process_event_global, process_event[i], test_file, iteration_over_tests, process_start_time, i))
-                    process_arr[i].start()
                     
+                    try:
+                        process_arr[i].start()
+                    except:
+                        print('!!!Error in process core {i}, test {process_list[i][process_comleted_arr[i]]}, exiting')
+                        sys.exit(0)
+                        
                     #putting the info that which test is running on a core, for deciding the target test to generate file
                     file_gen_queue.put(File_gen(start_time=process_start_time,
                                                 core=i, test_number=process_comleted_arr[i]))
@@ -279,7 +284,12 @@ while(True):        #infinite loop over test-file
                 
                     #starting the process
                     process_arr[i] = multiprocessing.Process(target=process, args=(Tests[tests_completed], process_event_global, process_event[i], test_file, iteration_over_tests, process_start_time, i))
-                    process_arr[i].start()
+                    
+                    try:
+                        process_arr[i].start()
+                    except:
+                        print('!!!Error in process core {i}, test {Tests[tests_completed]}, exiting')
+                        sys.exit(0)
                 
                 
                     tests_completed = tests_completed + 1
