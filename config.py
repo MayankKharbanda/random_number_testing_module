@@ -13,14 +13,14 @@ N_TUPL = 5
 
 
 
-TESTS_FILE = 'config.txt'   #contains location of the test file.
+TESTS_FILE = 'dieharder.txt'   #contains location of the test file.
 
 #contains location where results are to be stored
-RESULT_DEST = 'results_parallel_process'
+RESULT_DEST = 'dieharder_3+1'
 
 
 #number of cores to run the tests
-CORES = 4
+CORES = 3
 
 
 #destination for random file generation

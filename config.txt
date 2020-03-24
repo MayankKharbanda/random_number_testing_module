@@ -6,7 +6,7 @@ smallcrush,	sknuth__SimpPoker,		4,	None,		120000000
 smallcrush,	sknuth__CouponCollector, 	5,	None,		120000000
 smallcrush,	sknuth__MaxOft,			6, 	None,		54000000
 smallcrush,	svaria__WeightDistrib,		7,	None,		220000000
-smallcrush,	smarsa__MatrixRank,		8,	None,		33000000
+smallcrush,	smarsa__MatrixRank,		8,	None,		33000000,
 smallcrush,	sstring__HammingIndep,		9,	None,		140000000
 smallcrush,	swalk__RandomWalk1,		10,	None,		22000000
 #

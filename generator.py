@@ -1,3 +1,4 @@
+import os
 
 '''
 This is user defined function to generate random numbers.
@@ -14,6 +15,7 @@ def generator_method(output_file, file_size):
     Edit code below according to your generator.
     '''
     
+    '''
     source_file = 'dieharder203.bin'        #source location
     
     
@@ -39,3 +41,5 @@ def generator_method(output_file, file_size):
         wf.write(rf.read(file_size))
         #update pointer
         generator_method.file_seek = generator_method.file_seek + file_size
+    '''
+    os.system(f'EasyQuantis -p 0 -b {output_file} -n {file_size}')

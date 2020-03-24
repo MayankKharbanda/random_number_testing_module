@@ -3,11 +3,12 @@ import os
 import time
 from generator import generator_method
 from sys import exit
+import subprocess
 
-def inorder_random_file_gen(Tests, inorder_file_event):
+def inorder_random_file_gen(Tests, inorder_file_event, iteration_over_tests):
     
     temp_random_file = f'{config.TEMP_DEST}/temp_random.bin'
-    
+    start_time = time.time()
     for test in Tests:
         
         #checking for some special tests in dieharder which are different 
@@ -32,15 +33,24 @@ def inorder_random_file_gen(Tests, inorder_file_event):
         except:
             print('!!!Cannot generate numbers from generator function!!!')
             exit(0)
-            
+        
+        if('False' in subprocess.run(f'test -e {temp_random_file} && echo True || echo False ', stdout=subprocess.PIPE, shell = True).stdout.decode('utf-8')):
+            print('!!!Cannot generate numbers from generator function!!!')
+            exit(0)
         os.system(f'mv {temp_random_file} {test_file}')
+        
         inorder_file_event.set()
+        
+    os.system(f'mkdir -p {config.RESULT_DEST}/iteration_{iteration_over_tests}/')
+    with open(f'{config.RESULT_DEST}/iteration_{iteration_over_tests}/file_gen_time.txt','w') as fw:
+        fw.write(str(time.time()-start_time))
 
 
-def random_file_gen_time(process_list, file_gen_queue, total_tests_arr, time_file_event):
+def random_file_gen_time(process_list, file_gen_queue, total_tests_arr, time_file_event, iteration_over_tests):
     
+    start_time = time.time()
     total_tests = sum(total_tests_arr)
-    
+    earliest_complete = -1
     temp_random_file = f'{config.TEMP_DEST}/temp_random.bin'
     
     current_test_run_arr = [None]*config.CORES      #current test running in the ith core
@@ -78,7 +88,8 @@ def random_file_gen_time(process_list, file_gen_queue, total_tests_arr, time_fil
                     earliest_complete = i
                     break
         
-        
+        if(earliest_complete == -1):
+        	return
         #checking for some special tests in dieharder which are different 
         #in ntuples only and allocating test file name accordingly
         if(process_list[earliest_complete][last_file_gen_arr[earliest_complete]+1][config.SUITE] == 'dieharder' and 
@@ -107,3 +118,9 @@ def random_file_gen_time(process_list, file_gen_queue, total_tests_arr, time_fil
         last_file_gen_arr[earliest_complete] = last_file_gen_arr[earliest_complete]+1
         
         time_file_event.set()
+        
+    os.system(f'mkdir -p {config.RESULT_DEST}/iteration_{iteration_over_tests}/')
+    with open(f'{config.RESULT_DEST}/iteration_{iteration_over_tests}/file_gen_time.txt','w') as fw:
+        fw.write(str(time.time()-start_time))
+        
+        

@@ -47,12 +47,16 @@ def test_reader():
                     if(line_data[0:i] == [] or line_data[:] == ['']):
                         continue
                     tests.append(line_data[0:i])
-            
+                
+                #deleting the last blank elements, if any
+                while(tests[-1][-1] == ''):
+                    del tests[-1][-1]
                 
                 if(len(tests[-1]) != 6 and len(tests[-1]) != 5):
                     print(f'!!! Error in line {line_number+1} in tests file, Number of arguments does not match. !!!')    #checking for enough arguments
                     exit(0)
-            
+                    
+                #handling special tests with different number of arguments
                 if(tests[-1][config.SUITE]=='dieharder' and 
                    (tests[-1][config.ID] == '200' 
                     or tests[-1][config.ID] == '201' 

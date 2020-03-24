@@ -10,13 +10,17 @@ import subprocess
 from core_function import process
 from core_file_gen import inorder_random_file_gen, random_file_gen_time
 from file_gen_class import File_gen
+from config_arg import parse_arg
 
 sys.tracebacklimit=10
 
 #TODO add param from command line
 #TODO should I remove last incomplete iteration from directory
 
+NUMBER_OF_ITERATIONS = parse_arg()
 
+def post_process():
+    return
 
 def exit_func(signal_received, frame):  
     
@@ -41,6 +45,7 @@ def exit_func(signal_received, frame):
     with open(f'{config.RESULT_DEST}/module_report.txt','w') as fw:
         fw.write("Module running time (in s) :"+str(module_running_time)+"\n")
     
+    post_process()
     print('EXITING...')
     
     
@@ -90,14 +95,13 @@ signal(SIGINT, exit_func)   #initialization of signal to handle exit from module
 while(True):        #infinite loop over test-file
 
     
-    iteration_over_tests = iteration_over_tests + 1
-    
-    
     tests_completed = 0    #total tests completed till this moment.
     total_wait_time = 0     #total wait time for the main module.
 
-
-
+    if(iteration_over_tests == int(NUMBER_OF_ITERATIONS)):
+        exit_func(None, None)
+    
+    iteration_over_tests = iteration_over_tests + 1
     #array contaning n-lists of tests, each for a particular core according 
     #to time to execute.
     process_list = process_alloc(Tests)
@@ -119,7 +123,7 @@ while(True):        #infinite loop over test-file
             total_tests_arr.append(len(process_list[i]))
 
 
-        random_file_gen_process = multiprocessing.Process(target=random_file_gen_time, args=(process_list, file_gen_queue, total_tests_arr, time_file_event))
+        random_file_gen_process = multiprocessing.Process(target=random_file_gen_time, args=(process_list, file_gen_queue, total_tests_arr, time_file_event, iteration_over_tests))
         random_file_gen_process.start()        #start the process to generate random number file
         
     
@@ -219,7 +223,7 @@ while(True):        #infinite loop over test-file
         inorder_file_event = multiprocessing.Event()    #event to wakeup after generation of a file
         inorder_file_event.clear()
         
-        random_file_gen_process = multiprocessing.Process(target=inorder_random_file_gen, args=(Tests, inorder_file_event))
+        random_file_gen_process = multiprocessing.Process(target=inorder_random_file_gen, args=(Tests, inorder_file_event, iteration_over_tests))
         random_file_gen_process.start()     #start the process to generate random number file
         
         
@@ -269,12 +273,24 @@ while(True):        #infinite loop over test-file
                     
                     while( 'True' not in FILE_EXIST ):
                         
-                        out = subprocess.run(f'test -e {test_file} && echo True || echo False ', stdout=subprocess.PIPE, shell = True)
-                        FILE_EXIST = out.stdout.decode('utf-8')
-            
+                        inorder_file_event.clear()
+                        
+                        if(not random_file_gen_process.is_alive()):     #check if file generation is in process or not.
+                            
+                            out = subprocess.run(f'test -e {test_file} && echo True || echo False ', stdout=subprocess.PIPE, shell = True)
+                            FILE_EXIST = out.stdout.decode('utf-8')
+                            
+                            if('True' not in FILE_EXIST):
+                                print(f'\nFile with random numbers for test {Tests[tests_completed][config.SUITE]}, {Tests[tests_completed][config.ID]} doesn\'t exist \nand the core_file_gen process doesn\'t exist. ')
+                                exit_func(None, None)
+                        
+                        else:
+                            out = subprocess.run(f'test -e {test_file} && echo True || echo False ', stdout=subprocess.PIPE, shell = True)
+                            FILE_EXIST = out.stdout.decode('utf-8')
+                            
                         if('True' not in FILE_EXIST):
                             inorder_file_event.wait()
-                            inorder_file_event.clear()
+                                
 
                     
                     process_start_time = time.time()        #contains the start time of the test executing.
@@ -316,7 +332,7 @@ while(True):        #infinite loop over test-file
             or Test[config.ID] == '203')):
             
             
-            with open(f'{config.RESULT_DEST}/iteration_{iteration_over_tests}/{Test[config.SUITE]}_{Test[config.ID]}_{Test[config.N_TUPL]}_time.txt','w') as fr:
+            with open(f'{config.RESULT_DEST}/iteration_{iteration_over_tests}/{Test[config.SUITE]}_{Test[config.ID]}_{Test[config.N_TUPL]}_time.txt','r') as fr:
                 Test[config.TIME] = str(round(float((fr.readline()).strip()),2))
             os.system(f'rm {config.RESULT_DEST}/iteration_{iteration_over_tests}/{Test[config.SUITE]}_{Test[config.ID]}_{Test[config.N_TUPL]}_time.txt')
         else:
@@ -347,4 +363,4 @@ while(True):        #infinite loop over test-file
             if(len(Tests[Test]) == config.N_TUPL+1):
                 fw.write(Tests[Test][config.N_TUPL].rjust(10))
             fw.write("\n")
-            
+    
