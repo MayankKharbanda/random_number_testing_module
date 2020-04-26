@@ -1,19 +1,23 @@
 import os
 
-'''
-This is user defined function to generate random numbers.
-Change according to your random number generator.
-'''
 
 def generator_method(output_file, file_size):
-    
     '''
-    input-
-    output_file: the location/name of the output file to be generated.
-    file_size: the size of file(in bytes) to be created.
     
-    Edit code below according to your generator.
+
+    Parameters
+    ----------
+    output_file : name/location of the file to be generated
+    file_size : size of the file
+    
+    User defined function to creates the file
+
+    Returns
+    -------
+    None.
+
     '''
+    
     
     '''
     source_file = 'dieharder203.bin'        #source location
