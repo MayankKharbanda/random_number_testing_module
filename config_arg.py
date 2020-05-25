@@ -22,7 +22,7 @@ def parse_arg():
     parser.add_argument("-d", "--dest_loc", dest = "dest_loc", default = "results", help="Location where the results are stored", type=str)
     #destination to store result.
     
-    parser.add_argument("-c", "--cores", dest = "cores", default = "4", help="Number of cores for process, it allocates n-1 cores to tests and 1 core in file generation", type=str)
+    parser.add_argument("-c", "--cores", dest = "cores", default = "4", help="Number of cores for process, it allocates n-1 cores to tests and 1 core in file generation", type=int)
     #number of cores to make a process for each to run tests.
     
     parser.add_argument("-td", "--temp_dest", dest = "temp_dest", default = "temp_dest", help="temporary destination to store files", type=str)

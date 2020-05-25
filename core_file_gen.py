@@ -10,7 +10,7 @@ import subprocess
 
 
 
-def inorder_random_file_gen(Tests, inorder_file_event, iteration_over_tests, RESULT_DEST, TEMP_DEST):
+def inorder_random_file_gen(Tests, inorder_file_event, iteration_over_tests, RESULT_DEST, TEMP_DEST, MAX_FILE_SIZE):
     
     
     '''
@@ -70,7 +70,7 @@ def inorder_random_file_gen(Tests, inorder_file_event, iteration_over_tests, RES
         
         
         
-        file_size = min(int(test[config.SIZE]), config.MAX_FILE_SIZE)   #calculating size of random file to be generated
+        file_size = min(int(test[config.SIZE]), MAX_FILE_SIZE)   #calculating size of random file to be generated
         
         
         
@@ -115,7 +115,7 @@ def inorder_random_file_gen(Tests, inorder_file_event, iteration_over_tests, RES
 
 
 
-def random_file_gen_time(process_list, file_gen_queue, total_tests_arr, time_file_event, iteration_over_tests, RESULT_DEST, CORES, TEMP_DEST):
+def random_file_gen_time(process_list, file_gen_queue, total_tests_arr, time_file_event, iteration_over_tests, RESULT_DEST, CORES, TEMP_DEST, MAX_FILE_SIZE):
     
     
     '''
@@ -219,7 +219,7 @@ def random_file_gen_time(process_list, file_gen_queue, total_tests_arr, time_fil
         
         
         #calculating file size to be generated
-        file_size = min(int(process_list[earliest_complete][last_file_gen_arr[earliest_complete]+1][config.SIZE]), config.MAX_FILE_SIZE)
+        file_size = min(int(process_list[earliest_complete][last_file_gen_arr[earliest_complete]+1][config.SIZE]), MAX_FILE_SIZE)
         
         
         
