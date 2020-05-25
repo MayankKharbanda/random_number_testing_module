@@ -46,4 +46,4 @@ def generator_method(output_file, file_size):
         #update pointer
         generator_method.file_seek = generator_method.file_seek + file_size
     '''
-    os.system(f'EasyQuantis -p 0 -b {output_file} -n {file_size}')
+    os.system(f'EasyQuantis -u 0 -b {output_file} -n {file_size}')

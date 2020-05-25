@@ -324,7 +324,7 @@ while(True):        #infinite loop over test-file
             
                     else:
                 
-                        test_file = f'{config.TEMP_DEST}/{Tests[tests_completed][config.SUITE]}_{Tests[tests_completed][config.ID]}.bin'
+                        test_file = f'{TEMP_DEST}/{Tests[tests_completed][config.SUITE]}_{Tests[tests_completed][config.ID]}.bin'
                     
                     
                     
