@@ -1,0 +1,45 @@
+#!/bin/bash
+
+
+# Installing required packages for build
+sudo apt-get install libgsl0-dev --yes
+sudo apt-get install build-essential --yes
+sudo apt-get install autotools-dev --yes
+sudo apt-get install automake --yes
+sudo apt-get install libtool --yes
+
+
+# Dieharder installation
+cd Tests/dieharder_install
+make
+cd ..
+ln -s dieharder_install/install/bin/dieharder dieharder
+
+
+# NIST STS installation
+cd NIST_install
+mkdir obj
+make
+cd ..
+ln -s NIST_install/assess nist
+
+
+# TestU01 installation
+cd testu01_install
+make
+cd ..
+ln -s testu01_install/binary/TestU01 testu01
+
+
+# ENT installation
+cd ENT_install
+make
+cd ..
+ln -s ENT_install/ent ent
+
+
+
+#Source: https://github.com/crocs-muni/rtt-statistical-batteries
+
+
+printf "\n\nInstallation complete.\n"
