@@ -17,7 +17,7 @@ This module is created as part of masters thesis, worked jointly at DRDO, IIIT D
 - [-d] Destination to store results (Default - results/).
 - [-c] Number of cores to be allocated to the module. 1 core is allocated to the file generation module and n-1 are used for testing (Default - 4).
 - [-td] Path to store temporary file (Default - temp/). 
-- [-m] Threshold to file size(in bytes) for generator.py to create (Default - \begin{math} 10^{10} Bytes \end{math})
+- [-m] Threshold to file size(in bytes) for generator.py to create (Default - 10<sup>10</sup> Bytes).
 
 
 ## Flow chart
