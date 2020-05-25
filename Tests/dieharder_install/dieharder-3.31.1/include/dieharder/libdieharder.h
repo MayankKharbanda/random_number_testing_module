@@ -12,9 +12,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
-#include <stdint.h>
 #include <string.h>
 #include <sys/time.h>
+#include <stdint.h>
 
 /* This turns on uint macro in c99 */
 #define __USE_MISC 1

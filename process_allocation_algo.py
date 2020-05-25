@@ -1,25 +1,27 @@
 import config
 from sys import exit
     
-'''
-This function allocates nearly equally time consuming tests to each of the 
-cores, in the motivation to minimize the wait time of main module between tests.
-'''
 
-def process_alloc(Tests):
-    
+def process_alloc(Tests, CORES):
     
     '''
-    input: number of cores on which tests are to be run,
-            the list of tests to be run.
-    output: A list containing 'n' lists, for 'n' cores, 
-            of tests for running on each core, with core 1
-            containing the fastest tests, and nth core 
-            contains the slowest, generally.
-    NOTE: If running time for even a single test is not
-            available, function returns -1.
-    '''
+
+    Parameters
+    ----------
+    Tests : the list of tests to be run.
     
+    CORES : number of cores on which tests are to be run
+            
+
+    Returns
+    -------
+    process_list : A list containing 'n' lists, for 'n' cores, 
+                    of tests for running on each core.
+                
+    -1 :  If running time for even a single test is not
+            available.
+
+    '''
     
     
     
@@ -29,18 +31,25 @@ def process_alloc(Tests):
             return -1
                 
 
-    process_list = []       #list of, list of tests on processes
+    
+    
+    
+    process_list = []       #list of lists containing tests to run on processes
 
+    
     #Copy test list so that original list doesn't get affected
     tests_copy = Tests.copy()
 
 
 
     #create process list for each core.
-    for _ in range(config.CORES):
+    for _ in range(CORES):
         process_list.append([])
 
 
+    
+
+    
     try:
         #sorting list wrt time to execute
         tests_copy.sort(key = lambda x:float(x[config.TIME]))
@@ -49,27 +58,33 @@ def process_alloc(Tests):
         exit()
     
     
+    
+    
+    
     total_time = 0     #summation of wait time of all the processors
 
 
     
     
-    #Total time required to execute x-n tests, where x is total number 
+    
+    #Total time required to execute (x-n) tests, where x is total number 
     #of tests, and n is the number of cores in the list.
-    if(len(tests_copy)>config.CORES):
-        total_time = sum(float(test[config.TIME]) for test in tests_copy[:-config.CORES])
+    if(len(tests_copy)>CORES):
+        total_time = sum(float(test[config.TIME]) for test in tests_copy[:-CORES])
 
 
+    
     
     
     #wait time for each processor/time taken to start last test on the process
-    approx_time_each_process = total_time/config.CORES
+    approx_time_each_process = total_time/CORES
 
 
+    
     
     
     #adding slowest tests to each core list
-    for i in range(config.CORES):
+    for i in range(CORES):
         if(len(tests_copy)>0):
             process_list[-(i+1)].insert(0, tests_copy[-1])
             del tests_copy[-1]
@@ -81,7 +96,7 @@ def process_alloc(Tests):
 
     #adding tests to all the core tests lists except the first one
     #in greedy algorithm.
-    for i in range(config.CORES-1):
+    for i in range(CORES-1):
         
         if(len(tests_copy) == 0):
             break
@@ -106,7 +121,7 @@ def process_alloc(Tests):
         temp_sum = temp_sum+float(tests_copy[0][config.TIME])
         j = 0
         
-        while(temp_sum < approx_time_each_process):     #add small tests in the list
+        while(temp_sum < approx_time_each_process):     #add fast tests in the list
             process_list[-(i+1)].insert(j, tests_copy[0])
             del tests_copy[0]
             j = j+1

@@ -83,8 +83,8 @@ Counts the total number of 0 runs + total number of 1 runs across a sample of bi
 
 # 102 STS Serial Test (Generalized)
 Accumulates the frequencies of overlapping n-tuples of bits drawn from a source of random integers.  The expected distribution of n-bit patterns is multinomial with p = 2^(-n) e.g. the four 2-bit patterns 00 01 10 11 should occur with equal probability.  The target distribution is thus a simple chisq with 2^n - 1 degrees of freedom, one lost due to the constraint that:
-p_00 + p_01 + p_01 + p_11 = 1
-This test does all the possible bitlevel tests from n=1 to n=24 bits (where n=1 is basically sts_monobit, and n=2 IMO is redundant with sts_runs).  However, if I understand things correctly it is not possible to fail a 2 bit test and pass a 24 bit test, as if 2 bits are biased so that (say) 00 occurs a bit too often, then 24 bit strings containing 00's MUST be imbalanced as well relative to ones that do not, so we really only need to check n=24 bit results to get all the rest for free, so to speak.
+p\_00 + p\_01 + p\_01 + p\_11 = 1
+This test does all the possible bitlevel tests from n=1 to n=24 bits (where n=1 is basically sts\_monobit, and n=2 IMO is redundant with sts\_runs).  However, if I understand things correctly it is not possible to fail a 2 bit test and pass a 24 bit test, as if 2 bits are biased so that (say) 00 occurs a bit too often, then 24 bit strings containing 00's MUST be imbalanced as well relative to ones that do not, so we really only need to check n=24 bit results to get all the rest for free, so to speak.
 
 
 # 200 RGB Bit Distribution Test(Practrand - Similar to FPF test #5)
@@ -92,7 +92,7 @@ Accumulates the frequencies of all n-tuples of bits in a list of random integers
 
 
 # 201 RGB Generalized Minimum Distance Test
-This is the generalized minimum distance test, based on the paper of M. Fischler in the doc directory and private communications. This test utilizes correction terms that are essential in order for the test not to fail for large numbers of trials.  It replaces both diehard_2dsphere.c and diehard_3dsphere.c, and generalizes the test itself so that it can be run for any d = 2,3,4,5. 
+This is the generalized minimum distance test, based on the paper of M. Fischler in the doc directory and private communications. This test utilizes correction terms that are essential in order for the test not to fail for large numbers of trials.  It replaces both diehard\_2dsphere.c and diehard\_3dsphere.c, and generalizes the test itself so that it can be run for any d = 2,3,4,5. 
 
 
 # 202 RGB Permutations Test(Dieharder - OPERM5 #1)

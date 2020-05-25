@@ -1,0 +1,19 @@
+#Test_Suite,	Test_name,			ID,	Time,		Size
+smallcrush,	smarsa__BirthdaySpacings,	1,	None,		43000000,	#comment
+smallcrush,	sknuth__Collision,		2,	None,		43000000
+smallcrush,	sknuth__Gap,			3,	None,		220000000
+smallcrush,	sknuth__SimpPoker,		4,	None,		120000000
+smallcrush,	sknuth__CouponCollector, 	5,	None,		120000000
+smallcrush,	sknuth__MaxOft,			6, 	None,		54000000
+smallcrush,	svaria__WeightDistrib,		7,	None,		220000000
+smallcrush,	smarsa__MatrixRank,		8,	None,		33000000,
+smallcrush,	sstring__HammingIndep,		9,	None,		140000000
+smallcrush,	swalk__RandomWalk1,		10,	None,		22000000
+#
+#Test_Suite is the suite in which test belongs.
+#Test_name is the name of the test
+#ID is the test id
+#Time is the time required to run the test.
+#Size is the file size(in bytes) required by the test to execute.
+#the test data should be comma seperated and each line except tests should start from '#'.
+#if there is inline comment then last column must end with ','.
