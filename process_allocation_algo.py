@@ -69,8 +69,7 @@ def process_alloc(Tests, CORES):
     
     #Total time required to execute x tests, where x is total number 
     #of tests.
-    if(len(tests_copy)>CORES):
-        total_time = sum(float(test[config.TIME]) for test in tests_copy)
+    total_time = sum(float(test[config.TIME]) for test in tests_copy)
 
 
     
@@ -82,13 +81,13 @@ def process_alloc(Tests, CORES):
 
     
     
-    '''
+    
     #adding slowest tests to each core list
     for i in range(CORES):
         if(len(tests_copy)>0):
             process_list[-(i+1)].insert(0, tests_copy[-1])
             del tests_copy[-1]
-    '''
+    
 
 
 
@@ -101,9 +100,7 @@ def process_alloc(Tests, CORES):
         if(len(tests_copy) == 0):
             break
         
-        temp_sum = float(tests_copy[-1][config.TIME])   #first try to add long tests in the list
-        process_list[-(i+1)].insert(0, tests_copy[-1])
-        del tests_copy[-1]
+        temp_sum = float(process_list[i][0][config.TIME])   #first try to add long tests in the list
         
         if(len(tests_copy) == 0):
             break
