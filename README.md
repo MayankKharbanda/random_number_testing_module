@@ -1,6 +1,6 @@
 # Random Numbers Testing Module
 
-This module is created as part of masters thesis, worked jointly at DRDO, IIIT Delhi and University of Delhi. Parts of code are from [Randomness Statistics Batteries](https://github.com/crocs-muni/rtt-statistical-batteries).
+This module is created as part of masters thesis at IIIT Delhi and University of Delhi. Parts of code are from [Randomness Statistics Batteries](https://github.com/crocs-muni/rtt-statistical-batteries).
 
 
 ## Installation
